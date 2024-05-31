@@ -1,0 +1,1 @@
+export const testAPI = 'http://localhost:5000/api/connection/test'
