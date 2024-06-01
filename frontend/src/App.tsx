@@ -11,7 +11,7 @@ const App: React.FC = () => {
         <AppBar position="static">
           <Toolbar>
             <Typography variant="h6" style={{ flexGrow: 1 }}>
-              My MUI App
+              Mosaic Vision
             </Typography>
             <Button color="inherit" component={Link} to="/">
               Home
