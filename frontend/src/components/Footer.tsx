@@ -46,6 +46,7 @@ const Footer: React.FC = () => {
               Mon-Sat 9:00 am - 10:00 pm<br />
               <br />
               Tel: +92 324 8473731<br />
+              Email: info@mosaic-vision.net<br />
             </Typography>
             <Box mt={2}>
               <Link href="https://www.facebook.com/mosaicvisionpk/" color="inherit" sx={{ mr: 1 }}>
