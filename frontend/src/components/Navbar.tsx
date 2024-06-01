@@ -14,8 +14,8 @@ const Navbar: React.FC = () => {
         <IconButton edge="start" color="inherit" aria-label="menu">
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" style={{ flexGrow: 1 }}>
-        Mosaic Vision
+        <Typography variant="h6" color="secondary" style={{ flexGrow: 1 }}>
+          Mosaic Vision
         </Typography>
         <Button color="inherit" component={Link} to="/">
           Home
