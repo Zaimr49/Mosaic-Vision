@@ -1,4 +1,17 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme, ThemeOptions } from '@mui/material/styles';
+
+declare module '@mui/material/styles' {
+  interface Palette {
+    custom: {
+      tertiary: string;
+    };
+  }
+  interface PaletteOptions {
+    custom?: {
+      tertiary?: string;
+    };
+  }
+}
 
 const theme = createTheme({
   palette: {
@@ -8,7 +21,10 @@ const theme = createTheme({
     secondary: {
       main: '#ed1c24',
     },
+    custom: {
+      tertiary: '#ffffff',
+    },
   },
-});
+} as ThemeOptions);
 
 export default theme;
