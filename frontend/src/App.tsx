@@ -1,33 +1,24 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Container, Button } from '@mui/material';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Box } from '@mui/material';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
 
 const App: React.FC = () => {
   return (
     <Router>
-      <div className="App">
-        <AppBar position="static">
-          <Toolbar>
-            <Typography variant="h6" style={{ flexGrow: 1 }}>
-              Mosaic Vision
-            </Typography>
-            <Button color="inherit" component={Link} to="/">
-              Home
-            </Button>
-            <Button color="inherit" component={Link} to="/about">
-              About
-            </Button>
-          </Toolbar>
-        </AppBar>
-        <Container>
+      <Box display="flex" flexDirection="column" minHeight="100vh">
+        <Navbar />
+        <Box component="main" sx={{ flexGrow: 1 }}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
           </Routes>
-        </Container>
-      </div>
+        </Box>
+        <Footer />
+      </Box>
     </Router>
   );
 };

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, CircularProgress, Container } from '@mui/material';
+import { Typography, CircularProgress, Container, Box } from '@mui/material';
 import axios from 'axios';
-import {testAPI} from '../Constants';
+import { testAPI } from '../Constants';
+import HeroSection from '../components/HeroSection';
 
 const Home: React.FC = () => {
   const [message, setMessage] = useState<string>('');
@@ -24,22 +25,22 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <Container>
-      <Typography variant="h4" gutterBottom>
-        Home Page
-      </Typography>
-      {loading ? (
-        <CircularProgress />
-      ) : error ? (
-        <Typography variant="body1" color="error">
-          {error}
-        </Typography>
-      ) : (
-        <Typography variant="body1">
-          {message}
-        </Typography>
-      )}
-    </Container>
+    <>
+      <HeroSection />
+      <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="sm">
+        {loading ? (
+          <CircularProgress />
+        ) : error ? (
+          <Typography variant="body1" color="error">
+            {error}
+          </Typography>
+        ) : (
+          <Typography variant="body1">
+            {message}
+          </Typography>
+        )}
+      </Container>
+    </>
   );
 };
 
