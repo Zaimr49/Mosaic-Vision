@@ -1,19 +1,19 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import { Link } from 'react-router-dom';
-import { Box, Menu, MenuItem, Container, Drawer, List, ListItem, ListItemText, ListItemIcon, Collapse } from '@mui/material';
+import { Box, Menu, MenuItem, Container, Drawer, List, ListItem, ListItemText, ListItemIcon, Collapse, TextField } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery'
+import useMediaQuery from '@mui/material/useMediaQuery';
 import SearchIcon from '@mui/icons-material/Search';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import logo from '../Mosaic-Logo.png';  // Update this path to your actual logo file
+import logo from '../Mosaic-Logo.png';
 
 const Navbar: React.FC = () => {
   const theme = useTheme();
@@ -22,10 +22,25 @@ const Navbar: React.FC = () => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileView, setMobileView] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     setMobileView(isMobile);
   }, [isMobile]);
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const handleSearchAction = () => {
+    console.log('search working:', searchQuery);
+  };
+
+  const handleSearchKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSearchAction();
+    }
+  };
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>, menuName: string) => {
     setAnchorEl(event.currentTarget);
@@ -73,84 +88,84 @@ const Navbar: React.FC = () => {
       >
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
           <IconButton onClick={handleDrawerToggle}>
-            <CloseIcon sx = {{color: theme.palette.secondary.main}} />
+            <CloseIcon sx={{ color: theme.palette.secondary.main }} />
           </IconButton>
         </Box>
         <List>
           <ListItem button component={Link} to="/" onClick={handleDrawerToggle}>
-            <ListItemText primary="Home" sx = {{color: theme.palette.secondary.main}} />
+            <ListItemText primary="Home" sx={{ color: theme.palette.secondary.main }} />
           </ListItem>
           <ListItem button onClick={() => handleMenuClick('industry')}>
-            <ListItemText primary="Boxes by Industry" sx = {{color: theme.palette.secondary.main}}/>
+            <ListItemText primary="Boxes by Industry" sx={{ color: theme.palette.secondary.main }} />
             <ListItemIcon>
-              {openMenu === 'industry' ? <ExpandLess sx = {{color: theme.palette.secondary.main}}/> : <ExpandMore sx = {{color: theme.palette.secondary.main}}/> }
+              {openMenu === 'industry' ? <ExpandLess sx={{ color: theme.palette.secondary.main }} /> : <ExpandMore sx={{ color: theme.palette.secondary.main }} />}
             </ListItemIcon>
           </ListItem>
           <Collapse in={openMenu === 'industry'} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItem button>
-                <ListItemText primary="Apparel Boxes" />
+                <ListItemText primary="Apparel Boxes" sx={{ color: theme.palette.primary.main }} />
               </ListItem>
               <ListItem button>
-                <ListItemText primary="Bakery Boxes" />
+                <ListItemText primary="Bakery Boxes" sx={{ color: theme.palette.primary.main }}/>
               </ListItem>
               <ListItem button>
-                <ListItemText primary="Candle Boxes" />
+                <ListItemText primary="Candle Boxes" sx={{ color: theme.palette.primary.main }}/>
               </ListItem>
               <ListItem button>
-                <ListItemText primary="CBD Boxes" />
+                <ListItemText primary="CBD Boxes" sx={{ color: theme.palette.primary.main }}/>
               </ListItem>
               {/* Add more items as needed */}
             </List>
           </Collapse>
           <ListItem button onClick={() => handleMenuClick('material')}>
-            <ListItemText primary="Boxes by Material" sx = {{color: theme.palette.secondary.main}}/>
+            <ListItemText primary="Boxes by Material" sx={{ color: theme.palette.secondary.main }} />
             <ListItemIcon>
-              {openMenu === 'material' ? <ExpandLess sx = {{color: theme.palette.secondary.main}}/> : <ExpandMore sx = {{color: theme.palette.secondary.main}}/>}
+              {openMenu === 'material' ? <ExpandLess sx={{ color: theme.palette.secondary.main }} /> : <ExpandMore sx={{ color: theme.palette.secondary.main }} />}
             </ListItemIcon>
           </ListItem>
           <Collapse in={openMenu === 'material'} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItem button>
-                <ListItemText primary="Corrugated Boxes" />
+                <ListItemText primary="Corrugated Boxes" sx={{ color: theme.palette.primary.main }}/>
               </ListItem>
               <ListItem button>
-                <ListItemText primary="Rigid Boxes" />
+                <ListItemText primary="Rigid Boxes" sx={{ color: theme.palette.primary.main }}/>
               </ListItem>
               <ListItem button>
-                <ListItemText primary="Cardboard Boxes" />
+                <ListItemText primary="Cardboard Boxes" sx={{ color: theme.palette.primary.main }}/>
               </ListItem>
               <ListItem button>
-                <ListItemText primary="Kraft Boxes" />
+                <ListItemText primary="Kraft Boxes" sx={{ color: theme.palette.primary.main }}/>
               </ListItem>
               {/* Add more items as needed */}
             </List>
           </Collapse>
           <ListItem button onClick={() => handleMenuClick('style')}>
-            <ListItemText primary="Boxes by Style" sx = {{color: theme.palette.secondary.main}}/>
+            <ListItemText primary="Boxes by Style" sx={{ color: theme.palette.secondary.main }} />
             <ListItemIcon>
-              {openMenu === 'style' ? <ExpandLess sx = {{color: theme.palette.secondary.main}}/> : <ExpandMore sx = {{color: theme.palette.secondary.main}}/>}
+              {openMenu === 'style' ? <ExpandLess sx={{ color: theme.palette.secondary.main }} /> : <ExpandMore sx={{ color: theme.palette.secondary.main }} />}
             </ListItemIcon>
           </ListItem>
           <Collapse in={openMenu === 'style'} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItem button>
-                <ListItemText primary="Drawer Boxes" />
+                <ListItemText primary="Drawer Boxes" sx={{ color: theme.palette.primary.main }}/>
               </ListItem>
               <ListItem button>
-                <ListItemText primary="Sleeve Boxes" />
+                <ListItemText primary="Sleeve Boxes" sx={{ color: theme.palette.primary.main }}/>
               </ListItem>
               <ListItem button>
-                <ListItemText primary="Foldable Boxes" />
+                <ListItemText primary="Foldable Boxes" sx={{ color: theme.palette.primary.main }}/>
               </ListItem>
               <ListItem button>
-                <ListItemText primary="Telescope Boxes" />
+                <ListItemText primary="Telescope Boxes" sx={{ color: theme.palette.primary.main }}/>
               </ListItem>
               {/* Add more items as needed */}
             </List>
           </Collapse>
           <ListItem button component={Link} to="/portfolio" onClick={handleDrawerToggle}>
-            <ListItemText primary="Portfolio" sx = {{color: theme.palette.secondary.main}} />
+            <ListItemText primary="Portfolio" sx={{ color: theme.palette.secondary.main }} />
           </ListItem>
         </List>
       </Box>
@@ -208,20 +223,11 @@ const Navbar: React.FC = () => {
             <Box component={Link} to="/" sx={{ display: { xs: 'none', md: 'flex' }, mr: 2 }}>
               <img src={logo} alt="Mosaic Vision" style={{ height: '40px' }} />
             </Box>
-            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-              <IconButton
-                size="large"
-                aria-label="open drawer"
-                onClick={handleDrawerToggle}
-                sx={{ color: theme.palette.secondary.main }}
-              >
-                <MenuIcon />
-              </IconButton>
-            </Box>
+            
             <Box component={Link} to="/" sx={{ display: { xs: 'flex', md: 'none' }, flexGrow: 1 }}>
               <img src={logo} alt="Mosaic Vision" style={{ height: '40px' }} />
             </Box>
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, alignItems: 'center' }}>
               <Button color="inherit" component={Link} to="/" sx={{ color: theme.palette.primary.main, '&:hover': { color: theme.palette.secondary.main } }}>
                 Home
               </Button>
@@ -250,13 +256,49 @@ const Navbar: React.FC = () => {
                 Boxes by Style
               </Button>
             </Box>
-            <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center' }}>
-              <IconButton color="inherit" sx={{ color: theme.palette.primary.main, '&:hover': { color: theme.palette.secondary.main } }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: '2em' }}>
+              <TextField
+                variant="outlined"
+                size="small"
+                value={searchQuery}
+                onChange={handleSearchChange}
+                onKeyPress={handleSearchKeyPress}
+                placeholder="Search..."
+                sx={{
+                  marginRight: '10px',
+                  backgroundColor: 'white',
+                  borderRadius: '5px',
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: theme.palette.primary.main,
+                    },
+                    '&:hover fieldset': {
+                      borderColor: theme.palette.secondary.main,
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: theme.palette.secondary.main,
+                    },
+                  },
+                }}
+              />
+              <IconButton color="inherit" onClick={handleSearchAction} sx={{ color: theme.palette.primary.main, '&:hover': { color: theme.palette.secondary.main } }}>
                 <SearchIcon />
               </IconButton>
-              <Button color="inherit" sx={{ backgroundColor: theme.palette.secondary.main, color: theme.palette.custom.tertiary }} component={Link} to="/portfolio">
-                Portfolio
-              </Button>
+              {!mobileView && (
+                <Button color="inherit" sx={{ backgroundColor: theme.palette.secondary.main, color: theme.palette.custom.tertiary }} component={Link} to="/portfolio">
+                  Portfolio
+                </Button>
+              )}
+            </Box>
+            <Box sx={{ display: { xs: 'flex', md: 'none' }, justifyContent: 'flex-end' }}>
+              <IconButton
+                size="large"
+                aria-label="open drawer"
+                onClick={handleDrawerToggle}
+                sx={{ color: theme.palette.secondary.main }}
+              >
+                <MenuIcon />
+              </IconButton>
             </Box>
           </Toolbar>
         </Container>
