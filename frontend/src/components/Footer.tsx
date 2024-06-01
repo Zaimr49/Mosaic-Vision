@@ -2,6 +2,10 @@ import React from 'react';
 import { Container, Typography, Link, Box, Grid } from '@mui/material';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import PhoneIcon from '@mui/icons-material/Phone';
+import EmailIcon from '@mui/icons-material/Email';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 const Footer: React.FC = () => {
   return (
@@ -10,7 +14,7 @@ const Footer: React.FC = () => {
         <Grid container spacing={4}>
           <Grid item xs={12} sm={3}>
             <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold', color: 'grey.700' }}>
-              Catalog
+              CATALOG
             </Typography>
             <Link href="#" color="inherit" underline="none" display="block" sx={{ color: 'grey.600', mb: 1 }}>Labels</Link>
             <Link href="#" color="inherit" underline="none" display="block" sx={{ color: 'grey.600', mb: 1 }}>Hang Tags</Link>
@@ -22,7 +26,7 @@ const Footer: React.FC = () => {
           </Grid>
           <Grid item xs={12} sm={3}>
             <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold', color: 'grey.700' }}>
-              Information
+              INFORMATION
             </Typography>
             <Link href="#" color="inherit" underline="none" display="block" sx={{ color: 'grey.600', mb: 1 }}>FAQs</Link>
             <Link href="#" color="inherit" underline="none" display="block" sx={{ color: 'grey.600', mb: 1 }}>Products</Link>
@@ -31,7 +35,7 @@ const Footer: React.FC = () => {
           </Grid>
           <Grid item xs={12} sm={3}>
             <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold', color: 'grey.700' }}>
-              Our Store
+              OUR STORE
             </Typography>
             <Link href="#" color="inherit" underline="none" display="block" sx={{ color: 'grey.600', mb: 1 }}>About Mosaic Vision</Link>
             <Link href="#" color="inherit" underline="none" display="block" sx={{ color: 'grey.600', mb: 1 }}>Contact</Link>
@@ -39,14 +43,17 @@ const Footer: React.FC = () => {
           </Grid>
           <Grid item xs={12} sm={3}>
             <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold', color: 'grey.700' }}>
-              Contact
+              CONTACT US
             </Typography>
             <Typography variant="body2" color="textSecondary">
+              <LocationOnIcon sx={{ fontSize: 18, verticalAlign: 'middle', mr: 1 }} />
               19-A Abbot Road Near PTV Station, Opp Daily Sadaat Lahore Pakistan<br />
+              <AccessTimeIcon sx={{ fontSize: 18, verticalAlign: 'middle', mr: 1 }} />
               Mon-Sat 9:00 am - 10:00 pm<br />
-              <br />
-              Tel: +92 324 8473731<br />
-              Email: info@mosaic-vision.net<br />
+              <PhoneIcon sx={{ fontSize: 18, verticalAlign: 'middle', mr: 1 }} />
+              +92 324 8473731<br />
+              <EmailIcon sx={{ fontSize: 18, verticalAlign: 'middle', mr: 1 }} />
+              info@mosaic-vision.net<br />
             </Typography>
             <Box mt={2}>
               <Link href="https://www.facebook.com/mosaicvisionpk/" color="inherit" sx={{ mr: 1 }}>
