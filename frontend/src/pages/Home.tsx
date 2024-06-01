@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, CircularProgress, Container, Box } from '@mui/material';
+import { Typography, CircularProgress, Container } from '@mui/material';
 import axios from 'axios';
 import { testAPI } from '../Constants';
 import HeroSection from '../components/HeroSection';
