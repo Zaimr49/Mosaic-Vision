@@ -6,6 +6,9 @@ const middleby= "https://res.cloudinary.com/dxhuuad9z/image/upload/v1717316469/l
 const truegirl= "https://res.cloudinary.com/dxhuuad9z/image/upload/v1717316469/logos/nnae93iptyxxzsn1dhxl.jpg";
 const symponia= "https://res.cloudinary.com/dxhuuad9z/image/upload/v1717316469/logos/pvomrrbb1ixi5cxcla2d.jpg";
 const jeeter ="https://res.cloudinary.com/dxhuuad9z/image/upload/v1717316469/logos/czfefiatyi8f7jhks0ok.jpg";
+const organics ="https://res.cloudinary.com/dxhuuad9z/image/upload/v1717318653/logos/uh0t3riwauclypge532w.jpg";
+const bass ="https://res.cloudinary.com/dxhuuad9z/image/upload/v1717318653/logos/ma1i8aum37jj1pwt7462.jpg";
+const hazy ="https://res.cloudinary.com/dxhuuad9z/image/upload/v1717318653/logos/fgaoppy36kkj7gwvgu5u.jpg";
 
 
 
@@ -17,5 +20,8 @@ export const logos: Logo[] = [
     { url: truegirl },
     { url: symponia },
     { url: jeeter },
+    { url: organics },
+    { url: bass },
+    { url: hazy },
 
   ];
