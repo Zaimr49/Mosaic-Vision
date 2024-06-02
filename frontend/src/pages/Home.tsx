@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Typography, CircularProgress, Container } from '@mui/material';
 import axios from 'axios';
 import { testAPI } from '../Constants';
-import HeroSection from '../components/HeroSection';
+import HeroSection from '../components/HeroSection/HeroSection';
+import LogoSlider from '../components/LogoSlider/LogoSlider';
+
 
 const Home: React.FC = () => {
   const [message, setMessage] = useState<string>('');
@@ -27,6 +29,7 @@ const Home: React.FC = () => {
   return (
     <>
       <HeroSection />
+      <LogoSlider />
       <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="sm">
         {loading ? (
           <CircularProgress />
