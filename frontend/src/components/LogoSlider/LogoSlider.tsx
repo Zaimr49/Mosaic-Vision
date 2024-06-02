@@ -95,14 +95,14 @@ const LogoSlider: React.FC = () => {
       {
         breakpoint: 768, // Mobile Landscape
         settings: {
-          slidesToShow: 6,
+          slidesToShow: 5,
           slidesToScroll: 1,
         }
       },
       {
         breakpoint: 480, // Mobile Portrait
         settings: {
-          slidesToShow: 6,
+          slidesToShow: 5,
           slidesToScroll: 1,
         }
       }

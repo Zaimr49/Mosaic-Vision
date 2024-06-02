@@ -34,13 +34,13 @@
   
   @media (max-width: 768px) {
     .img-normal {
-      width: 60px !important;
+      width: 90px !important;
     }
   }
   
   @media (max-width: 480px) {
     .img-normal {
-      width: 60px !important;
+      width: 90px !important;
     }
   }
   
