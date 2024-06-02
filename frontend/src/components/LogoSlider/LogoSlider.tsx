@@ -95,14 +95,14 @@ const LogoSlider: React.FC = () => {
       {
         breakpoint: 768, // Mobile Landscape
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 6,
           slidesToScroll: 1,
         }
       },
       {
         breakpoint: 480, // Mobile Portrait
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 6,
           slidesToScroll: 1,
         }
       }
@@ -124,7 +124,7 @@ const LogoSlider: React.FC = () => {
           backgroundColor: '#f9f9f9',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          maxWidth: '70%',
+          maxWidth: { xs: '100%', md: '70%' }, 
           paddingBlockStart: '1px'
         }}
       >
