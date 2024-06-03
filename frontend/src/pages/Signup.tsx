@@ -1,16 +1,17 @@
-import React from 'react';
-import { Box, Typography, TextField, Button, Paper, Link } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Typography, TextField, Button, Paper, Link, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { setUserData } from '../redux/slices/User_Slice';
 import axios from 'axios';
-import {adminSignupAPI} from '../Constants'
+import { adminSignupAPI } from '../Constants';
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -26,6 +27,7 @@ const Signup: React.FC = () => {
         .required('Required'),
     }),
     onSubmit: async (values) => {
+      setLoading(true);
       try {
         const response = await axios.post(adminSignupAPI, values);
         dispatch(setUserData({
@@ -36,6 +38,8 @@ const Signup: React.FC = () => {
         navigate('/admin-home-page');
       } catch (error) {
         console.error('Failed to sign up', error);
+      } finally {
+        setLoading(false);
       }
     },
   });
@@ -91,15 +95,30 @@ const Signup: React.FC = () => {
           error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
           helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
         />
-        <Button
-          variant="contained"
-          color="primary"
-          fullWidth
-          sx={{ marginTop: 2 }}
-          type="submit"
-        >
-          Sign Up
-        </Button>
+        <Box sx={{ position: 'relative' }}>
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            sx={{ marginTop: 2 }}
+            type="submit"
+            disabled={loading}
+          >
+            Sign Up
+          </Button>
+          {loading && (
+            <CircularProgress
+              size={24}
+              sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                marginTop: '-12px',
+                marginLeft: '-12px',
+              }}
+            />
+          )}
+        </Box>
       </form>
       <Typography variant="body2" sx={{ marginTop: 2, textAlign: 'center' }}>
         Already have an account? <Link href="/admin-login">Login</Link>
