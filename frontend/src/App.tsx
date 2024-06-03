@@ -6,7 +6,8 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
 import NotFoundPage from './pages/NotFoundPage';
-import Admin from './pages/Admin'; 
+import Admin from './pages/AdminAuth'; 
+import AdminHome from './pages/AdminHome';
 import Login from './pages/Login'; 
 import Signup from './pages/Signup';
 
@@ -22,6 +23,7 @@ const App: React.FC = () => {
             <Route path="/admin" element={<Admin />} />
             <Route path="/admin-login" element={<Login />} /> 
             <Route path="/admin-signup" element={<Signup />} />
+            <Route path="/admin-home-page" element={<AdminHome />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Box>

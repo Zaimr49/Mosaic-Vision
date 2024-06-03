@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './DB/Connect'; 
 import testRouter from './routes/testRoute';
+import adminRouter from './routes/adminRoute';
 
 dotenv.config();
 
@@ -14,6 +15,8 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/connection', testRouter);
+
+app.use('/api/admin', adminRouter);
 
 const start = async (): Promise<void> => {
   try {

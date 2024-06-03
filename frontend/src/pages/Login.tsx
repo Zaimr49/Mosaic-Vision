@@ -1,16 +1,39 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Typography, TextField, Button, Paper, Link } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { setUserData } from '../redux/slices/User_Slice';
+import axios from 'axios';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
 
-  const handleLogin = () => {
-    console.log('Logging in with', { email, password });
-    navigate('/');
-  };
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().email('Invalid email address').required('Required'),
+      password: Yup.string().required('Required'),
+    }),
+    onSubmit: async (values) => {
+      try {
+        const response = await axios.post('http://localhost:5001/api/admin/login', values);
+        dispatch(setUserData({
+          isAdmin: true,
+          email: response.data.admin.email,
+          token: response.data.token,
+        }));
+        navigate('/admin-home-page');
+      } catch (error) {
+        console.error('Failed to login', error);
+      }
+    },
+  });
 
   return (
     <Box
@@ -21,32 +44,44 @@ const Login: React.FC = () => {
       <Typography variant="h4" gutterBottom>
         Login
       </Typography>
-      <TextField
-        fullWidth
-        label="Email"
-        margin="normal"
-        sx={{ marginBottom: 2 }}
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <TextField
-        fullWidth
-        label="Password"
-        type="password"
-        margin="normal"
-        sx={{ marginBottom: 2 }}
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <Button
-        variant="contained"
-        color="primary"
-        fullWidth
-        sx={{ marginTop: 2 }}
-        onClick={handleLogin}
-      >
-        Login
-      </Button>
+      <form onSubmit={formik.handleSubmit}>
+        <TextField
+          fullWidth
+          id="email"
+          name="email"
+          label="Email"
+          margin="normal"
+          sx={{ marginBottom: 2 }}
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.email && Boolean(formik.errors.email)}
+          helperText={formik.touched.email && formik.errors.email}
+        />
+        <TextField
+          fullWidth
+          id="password"
+          name="password"
+          label="Password"
+          type="password"
+          margin="normal"
+          sx={{ marginBottom: 2 }}
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.password && Boolean(formik.errors.password)}
+          helperText={formik.touched.password && formik.errors.password}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          sx={{ marginTop: 2 }}
+          type="submit"
+        >
+          Login
+        </Button>
+      </form>
       <Typography variant="body2" sx={{ marginTop: 2, textAlign: 'center' }}>
         Don't have an account? <Link href="/admin-signup">Sign up</Link>
       </Typography>

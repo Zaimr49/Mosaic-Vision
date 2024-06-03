@@ -1,18 +1,43 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Typography, TextField, Button, Paper, Link } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { setUserData } from '../redux/slices/User_Slice';
+import axios from 'axios';
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const dispatch = useDispatch();
 
-  const handleSignup = () => {
-     
-    console.log('Signing up with', { email, password, confirmPassword });
-    navigate('/');
-  };
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().email('Invalid email address').required('Required'),
+      password: Yup.string().required('Required'),
+      confirmPassword: Yup.string()
+        .oneOf([Yup.ref('password'), undefined], 'Passwords must match')
+        .required('Required'),
+    }),
+    onSubmit: async (values) => {
+      try {
+        const response = await axios.post('http://localhost:5001/api/admin/signup', values);
+        dispatch(setUserData({
+          isAdmin: true,
+          email: response.data.admin.email,
+          token: response.data.token,
+        }));
+        navigate('/admin-home-page');
+      } catch (error) {
+        console.error('Failed to sign up', error);
+      }
+    },
+  });
 
   return (
     <Box
@@ -23,41 +48,58 @@ const Signup: React.FC = () => {
       <Typography variant="h4" gutterBottom>
         Sign Up
       </Typography>
-      <TextField
-        fullWidth
-        label="Email"
-        margin="normal"
-        sx={{ marginBottom: 2 }}
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <TextField
-        fullWidth
-        label="Password"
-        type="password"
-        margin="normal"
-        sx={{ marginBottom: 2 }}
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <TextField
-        fullWidth
-        label="Confirm Password"
-        type="password"
-        margin="normal"
-        sx={{ marginBottom: 2 }}
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
-      />
-      <Button
-        variant="contained"
-        color="primary"
-        fullWidth
-        sx={{ marginTop: 2 }}
-        onClick={handleSignup}
-      >
-        Sign Up
-      </Button>
+      <form onSubmit={formik.handleSubmit}>
+        <TextField
+          fullWidth
+          id="email"
+          name="email"
+          label="Email"
+          margin="normal"
+          sx={{ marginBottom: 2 }}
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.email && Boolean(formik.errors.email)}
+          helperText={formik.touched.email && formik.errors.email}
+        />
+        <TextField
+          fullWidth
+          id="password"
+          name="password"
+          label="Password"
+          type="password"
+          margin="normal"
+          sx={{ marginBottom: 2 }}
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.password && Boolean(formik.errors.password)}
+          helperText={formik.touched.password && formik.errors.password}
+        />
+        <TextField
+          fullWidth
+          id="confirmPassword"
+          name="confirmPassword"
+          label="Confirm Password"
+          type="password"
+          margin="normal"
+          sx={{ marginBottom: 2 }}
+          value={formik.values.confirmPassword}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
+          helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          sx={{ marginTop: 2 }}
+          type="submit"
+        >
+          Sign Up
+        </Button>
+      </form>
       <Typography variant="body2" sx={{ marginTop: 2, textAlign: 'center' }}>
         Already have an account? <Link href="/admin-login">Login</Link>
       </Typography>
