@@ -17,6 +17,7 @@ import logo from '../Mosaic-Logo.png';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../redux/store';
 import { clearUserData } from '../redux/slices/User_Slice';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
   const theme = useTheme();
@@ -27,6 +28,7 @@ const Navbar: React.FC = () => {
   const [mobileView, setMobileView] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { isAdmin } = useSelector((state: RootState) => state.User);
 
@@ -68,6 +70,7 @@ const Navbar: React.FC = () => {
 
   const handleLogout = () => {
     dispatch(clearUserData());
+    navigate('/admin');
   };
 
   const getButtonStyles = (menuName: string) => ({
@@ -184,10 +187,11 @@ const Navbar: React.FC = () => {
                 </Button>
               </Box>
             )} */}
-          <ListItem button component={Link} to="/portfolio" onClick={handleDrawerToggle}>
-          <Button color="inherit" onClick={handleLogout} sx={{ backgroundColor: theme.palette.error.main, color: theme.palette.custom.tertiary }}>
+          <ListItem button component={Link} to="/admin" onClick={handleDrawerToggle}>
+          {isAdmin &&
+          (<Button color="inherit" onClick={handleLogout} sx={{ backgroundColor: theme.palette.error.main, color: theme.palette.custom.tertiary }}>
                   Logout
-                </Button>
+                </Button>)}
           </ListItem>
         </List>
       </Box>
