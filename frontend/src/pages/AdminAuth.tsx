@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Typography, Button, Grid, Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 
 const Admin: React.FC = () => {
   const navigate = useNavigate();
+  const { isAdmin } = useSelector((state: RootState) => state.User);
+
+  useEffect(() => {
+    if (isAdmin) {
+      navigate('/admin-home-page');
+    }
+  }, [isAdmin, navigate]);
 
   const handleLogin = () => {
     navigate('/admin-login');
