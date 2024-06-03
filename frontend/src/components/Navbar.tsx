@@ -92,8 +92,8 @@ const Navbar: React.FC = () => {
           </IconButton>
         </Box>
         <List>
-          <ListItem button component={Link} to="/" onClick={handleDrawerToggle}>
-            <ListItemText primary="Home" sx={{ color: theme.palette.secondary.main }} />
+          <ListItem button component={Link} to="/admin" onClick={handleDrawerToggle}>
+            <ListItemText primary="Admin" sx={{ color: theme.palette.secondary.main }} />
           </ListItem>
           <ListItem button onClick={() => handleMenuClick('industry')}>
             <ListItemText primary="Boxes by Industry" sx={{ color: theme.palette.secondary.main }} />
@@ -228,8 +228,8 @@ const Navbar: React.FC = () => {
               <img src={logo} alt="Mosaic Vision" style={{ height: '40px' }} />
             </Box>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, alignItems: 'center' }}>
-              <Button color="inherit" component={Link} to="/" sx={{ color: theme.palette.primary.main, '&:hover': { color: theme.palette.secondary.main } }}>
-                Home
+              <Button color="inherit" component={Link} to="/admin" sx={{ color: theme.palette.primary.main, '&:hover': { color: theme.palette.secondary.main } }}>
+                Admin
               </Button>
               <Button
                 color="inherit"

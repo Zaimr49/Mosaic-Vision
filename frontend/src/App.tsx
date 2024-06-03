@@ -5,6 +5,10 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
+import NotFoundPage from './pages/NotFoundPage';
+import Admin from './pages/Admin'; 
+import Login from './pages/Login'; 
+import Signup from './pages/Signup';
 
 const App: React.FC = () => {
   return (
@@ -15,6 +19,10 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin-login" element={<Login />} /> 
+            <Route path="/admin-signup" element={<Signup />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Box>
         <Footer />
