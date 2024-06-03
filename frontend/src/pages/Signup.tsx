@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { setUserData } from '../redux/slices/User_Slice';
 import axios from 'axios';
+import {adminSignupAPI} from '../Constants'
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const Signup: React.FC = () => {
     }),
     onSubmit: async (values) => {
       try {
-        const response = await axios.post('http://localhost:5001/api/admin/signup', values);
+        const response = await axios.post(adminSignupAPI, values);
         dispatch(setUserData({
           isAdmin: true,
           email: response.data.admin.email,
