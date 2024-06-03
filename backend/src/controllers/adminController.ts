@@ -1,17 +1,16 @@
 import { Request, Response } from 'express';
 import Admin from '../models/Admin';
-import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 // Signup function
 export const signupFunction = async (req: Request, res: Response) => {
-    console.log("In signupFunction")
+  console.log("In signupFunction");
   const { email, password } = req.body;
-//   check to see if email and password not null 
-    if (!email || !password) {
-        return res.status(400).json({ message: 'Please provide email and password' });
-    }
-    console.log("Email =", email," || password =", password)
+  // Check to see if email and password not null 
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Please provide email and password' });
+  }
+  console.log("Email =", email, " || password =", password);
 
   try {
     const existingAdmin = await Admin.findOne({ email });
@@ -19,8 +18,7 @@ export const signupFunction = async (req: Request, res: Response) => {
       return res.status(400).json({ message: 'Admin already exists' });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 12);
-    const newAdmin = new Admin({ email, password: hashedPassword });
+    const newAdmin = new Admin({ email, password });
 
     await newAdmin.save();
 
@@ -34,13 +32,13 @@ export const signupFunction = async (req: Request, res: Response) => {
 
 // Login function
 export const loginFunction = async (req: Request, res: Response) => {
-    console.log("In loginFunction")
+  console.log("In loginFunction");
   const { email, password } = req.body;
-//   check to see if email and password not null 
-    if (!email || !password) {
-        return res.status(400).json({ message: 'Please provide email and password' });
-    }
-    console.log("Email =", email," || password =", password)
+  // Check to see if email and password not null 
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Please provide email and password' });
+  }
+  console.log("Email =", email, " || password =", password);
 
   try {
     const existingAdmin = await Admin.findOne({ email });
@@ -48,8 +46,9 @@ export const loginFunction = async (req: Request, res: Response) => {
       return res.status(404).json({ message: 'Admin not found' });
     }
 
-    const isPasswordCorrect = await bcrypt.compare(password, existingAdmin.password);
+    const isPasswordCorrect = await existingAdmin.comparePassword(password);
     if (!isPasswordCorrect) {
+      console.log("Invalid credentials");
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
@@ -60,3 +59,9 @@ export const loginFunction = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Something went wrong', error });
   }
 };
+
+// Check Middleware Authentication function
+export const checkMiddlewareAuth = (req: Request, res: Response) => {
+    console.log("In checkMiddlewareAuth");
+    res.status(200).json({ message: 'JWT token auth verified' });
+  };

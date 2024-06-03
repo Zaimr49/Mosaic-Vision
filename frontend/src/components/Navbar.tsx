@@ -14,6 +14,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import logo from '../Mosaic-Logo.png';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../redux/store';
+import { clearUserData } from '../redux/slices/User_Slice';
 
 const Navbar: React.FC = () => {
   const theme = useTheme();
@@ -23,6 +26,9 @@ const Navbar: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileView, setMobileView] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const dispatch = useDispatch();
+
+  const { isAdmin } = useSelector((state: RootState) => state.User);
 
   useEffect(() => {
     setMobileView(isMobile);
@@ -58,6 +64,10 @@ const Navbar: React.FC = () => {
 
   const handleMenuClick = (menuName: string) => {
     setOpenMenu(openMenu === menuName ? null : menuName);
+  };
+
+  const handleLogout = () => {
+    dispatch(clearUserData());
   };
 
   const getButtonStyles = (menuName: string) => ({
@@ -166,6 +176,18 @@ const Navbar: React.FC = () => {
           </Collapse>
           <ListItem button component={Link} to="/portfolio" onClick={handleDrawerToggle}>
             <ListItemText primary="Portfolio" sx={{ color: theme.palette.secondary.main }} />
+          </ListItem>
+          {/* {!mobileView && isAdmin && (
+              <Box sx={{ marginLeft: '2em' }}>
+                <Button color="inherit" onClick={handleLogout} sx={{ backgroundColor: theme.palette.error.main, color: theme.palette.custom.tertiary }}>
+                  Logout
+                </Button>
+              </Box>
+            )} */}
+          <ListItem button component={Link} to="/portfolio" onClick={handleDrawerToggle}>
+          <Button color="inherit" onClick={handleLogout} sx={{ backgroundColor: theme.palette.error.main, color: theme.palette.custom.tertiary }}>
+                  Logout
+                </Button>
           </ListItem>
         </List>
       </Box>
@@ -290,6 +312,13 @@ const Navbar: React.FC = () => {
                 </Button>
               )}
             </Box>
+            {!mobileView && isAdmin && (
+              <Box sx={{ marginLeft: '2em' }}>
+                <Button color="inherit" onClick={handleLogout} sx={{ backgroundColor: theme.palette.error.main, color: theme.palette.custom.tertiary }}>
+                  Logout
+                </Button>
+              </Box>
+            )}
             <Box sx={{ display: { xs: 'flex', md: 'none' }, justifyContent: 'flex-end' }}>
               <IconButton
                 size="large"

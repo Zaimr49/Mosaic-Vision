@@ -3,7 +3,7 @@ import counterSlice from "./slices/counter";
 import Unpersisted_counterslice from "./slices/unpersisted_counter";
 import User_Slice from "./slices/User_Slice";
 import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+// import storage from 'redux-persist/lib/storage';
 import storageSession from 'redux-persist/lib/storage/session';
 import { combineReducers } from 'redux';
 

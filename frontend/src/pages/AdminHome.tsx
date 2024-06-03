@@ -1,11 +1,44 @@
 // src/pages/AdminHome.tsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { Box, Typography, Paper } from '@mui/material';
+import { Box, Typography, Paper, CircularProgress } from '@mui/material';
+import axios from 'axios';
+import {twtAuthTestAPI} from '../Constants';
 
 const AdminHome: React.FC = () => {
   const { email, isAdmin, token } = useSelector((state: RootState) => state.User);
+  const navigate = useNavigate();
+  const [authMessage, setAuthMessage] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (!isAdmin) {
+      navigate('/admin');
+    }
+  }, [isAdmin, navigate]);
+
+  useEffect(() => {
+    const verifyAuth = async () => {
+      try {
+        const response = await axios.get(twtAuthTestAPI, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setAuthMessage(response.data.message);
+      } catch (error) {
+        setAuthMessage('Failed to verify authentication');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (isAdmin && token) {
+      verifyAuth();
+    }
+  }, [isAdmin, token]);
 
   return (
     <Box
@@ -22,9 +55,13 @@ const AdminHome: React.FC = () => {
       <Typography variant="body1" gutterBottom>
         <strong>Is Admin:</strong> {isAdmin ? 'Yes' : 'No'}
       </Typography>
-      <Typography variant="body1" gutterBottom>
-        <strong>Token:</strong> {token}
-      </Typography>
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        <Typography variant="body1" gutterBottom>
+          <strong>Auth Message:</strong> {authMessage}
+        </Typography>
+      )}
     </Box>
   );
 };

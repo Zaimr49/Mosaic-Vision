@@ -1,4 +1,4 @@
-import express, { Application } from 'express';
+import express, { Application, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './DB/Connect'; 
@@ -13,6 +13,11 @@ const port: string | number = process.env.PORT || 5001;
 app.use(cors());
 
 app.use(express.json());
+
+// Default message on root GET request
+app.get('/', (req: Request, res: Response) => {
+  res.send('Welcome to Mosaic Vision Backend!');
+});
 
 app.use('/api/connection', testRouter);
 
