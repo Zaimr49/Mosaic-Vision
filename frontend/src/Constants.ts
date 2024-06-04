@@ -7,3 +7,6 @@ export const adminSignupAPI = `${base_url}/api/admin/signup`
 export interface Logo {
     url: string;
   }
+
+  export const CloudinaryUploadAPI: string =
+  "https://api.cloudinary.com/v1_1/do2hqf8du/image/upload";

@@ -8,6 +8,9 @@ import About from './pages/About';
 import NotFoundPage from './pages/NotFoundPage';
 import Admin from './pages/AdminAuth'; 
 import AdminHome from './pages/AdminHome';
+import AdminAllStock from './pages/AdminAllStock';
+import AddStock from './pages/AddStock';
+import EditStock from './pages/EditStock';
 import Login from './pages/Login'; 
 import Signup from './pages/Signup';
 
@@ -24,6 +27,9 @@ const App: React.FC = () => {
             <Route path="/admin-login" element={<Login />} /> 
             <Route path="/admin-signup" element={<Signup />} />
             <Route path="/admin-home-page" element={<AdminHome />} />
+            <Route path="/admin-all-stock" element={<AdminAllStock />} />
+            <Route path="/admin-add-stock" element={<AddStock />} />
+            <Route path="/admin-edit-stock/:id" element={<EditStock />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Box>
