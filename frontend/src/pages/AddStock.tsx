@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
@@ -13,7 +13,7 @@ const categories = [
 ];
 
 const AddStock: React.FC = () => {
-  const { token } = useSelector((state: RootState) => state.User);
+  const { isAdmin, token } = useSelector((state: RootState) => state.User);
   const navigate = useNavigate();
   const [stockData, setStockData] = useState({
     name: '',
@@ -24,6 +24,12 @@ const AddStock: React.FC = () => {
   });
   const [subCategories, setSubCategories] = useState<string[]>([]);
   const [isUploading, setIsUploading] = useState(false);
+
+  useEffect(() => {
+    if (!isAdmin) {
+      navigate('/admin-home-page');
+    }
+  }, [isAdmin, navigate]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
