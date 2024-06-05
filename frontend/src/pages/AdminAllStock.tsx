@@ -6,6 +6,8 @@ import { Box, Typography, Paper, CircularProgress, Button, Grid } from '@mui/mat
 import axios from 'axios';
 import { twtAuthTestAPI } from '../Constants';
 import StockItem from '../components/StockItem';
+import './AdminAllStock.css';
+
 
 const AdminAllStock: React.FC = () => {
   const { email, isAdmin, token } = useSelector((state: RootState) => state.User);
@@ -81,9 +83,20 @@ const AdminAllStock: React.FC = () => {
       elevation={3}
       sx={{ padding: 4, maxWidth: 900, margin: 'auto', marginTop: 8, marginBottom: 4 }}
     >
-      <Typography variant="h4" sx={{textAlign:'center'}} gutterBottom>
-        All Stocks Page
-      </Typography>
+      <Typography
+          variant="h5"
+          color='#333333'
+          sx={{
+            mt: 1,
+            mb: 3,
+            textAlign: 'center',
+            fontWeight: '800',
+            letterSpacing: '0px',
+            fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2.25rem' }, 
+            fontFamily: 'Poppins, sans-serif',
+          }}
+        >
+All Stocks Page        </Typography>
       
       <Typography variant="body1" gutterBottom>
         <strong>Email:</strong> {email}

@@ -106,7 +106,7 @@ const StockItem: React.FC<StockItemProps> = ({ stock, onDelete }) => {
   const renderDescription = () => {
     const description = showFullDescription ? stock.description : `${stock.description.slice(0, 50)}...`;
     return (
-      <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+      <Typography variant="body1" color="text.secondary" sx={{ mt: 2 }}>
         <strong>Description:</strong> {description}{' '}
         {!showFullDescription && (
           <Button variant="text" onClick={toggleDescription} color="primary">
@@ -128,13 +128,27 @@ const StockItem: React.FC<StockItemProps> = ({ stock, onDelete }) => {
         onClick={handleOpen}
       />
       <CardContent sx={{ flexGrow: 1 }}>
-        <Typography variant="h5" gutterBottom>
+        {/* <Typography variant="h5" gutterBottom>
           {stock.name}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
+        </Typography> */}
+        <Typography
+          variant="h5"
+          color='#333333'
+          sx={{
+            mt: 0,
+            mb: 3,
+            textAlign: 'center',
+            fontWeight: '600',
+            letterSpacing: '0px',
+            fontSize: { xs: '1rem', sm: '1.0rem', md: '1.25rem' }, 
+            fontFamily: 'Poppins, sans-serif',
+          }}
+        >
+{stock.name}        </Typography>
+        <Typography variant="body1" color="text.secondary">
           <strong>Category:</strong> {stock.category}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body1" color="text.secondary">
           <strong>Sub-Category:</strong> {stock.subCategory}
         </Typography>
         {renderDescription()}
