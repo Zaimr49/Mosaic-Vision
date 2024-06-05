@@ -72,10 +72,19 @@
 // };
 
 // export default StockItem;
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Box, Card, CardContent, CardMedia, Typography, Button, Modal, IconButton } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  Box,
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  Button,
+  Modal,
+  IconButton,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 interface StockItemProps {
   stock: any;
@@ -104,10 +113,12 @@ const StockItem: React.FC<StockItemProps> = ({ stock, onDelete }) => {
   };
 
   const renderDescription = () => {
-    const description = showFullDescription ? stock.description : `${stock.description.slice(0, 50)}...`;
+    const description = showFullDescription
+      ? stock.description
+      : `${stock.description.slice(0, 50)}...`;
     return (
       <Typography variant="body1" color="text.secondary" sx={{ mt: 2 }}>
-        <strong>Description:</strong> {description}{' '}
+        <strong>Description:</strong> {description}{" "}
         {!showFullDescription && (
           <Button variant="text" onClick={toggleDescription} color="primary">
             Read more
@@ -118,13 +129,13 @@ const StockItem: React.FC<StockItemProps> = ({ stock, onDelete }) => {
   };
 
   return (
-    <Card sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <Card sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
       <CardMedia
         component="img"
         height="140"
         image={stock.images[0]}
         alt={stock.name}
-        sx={{ objectFit: 'cover', cursor: 'pointer' }}
+        sx={{ objectFit: "cover", cursor: "pointer" }}
         onClick={handleOpen}
       />
       <CardContent sx={{ flexGrow: 1 }}>
@@ -133,18 +144,19 @@ const StockItem: React.FC<StockItemProps> = ({ stock, onDelete }) => {
         </Typography> */}
         <Typography
           variant="h5"
-          color='#333333'
+          color="#333333"
           sx={{
-            mt: 0,
+            mt: 0.5,
             mb: 3,
-            textAlign: 'center',
-            fontWeight: '600',
-            letterSpacing: '0px',
-            fontSize: { xs: '1rem', sm: '1.0rem', md: '1.25rem' }, 
-            fontFamily: 'Poppins, sans-serif',
+            textAlign: "center",
+            fontWeight: "600",
+            letterSpacing: "0px",
+            fontSize: { xs: "1.25rem", sm: "1.25rem", md: "1.5rem" },
+            fontFamily: "Poppins, sans-serif",
           }}
         >
-{stock.name}        </Typography>
+          {stock.name}{" "}
+        </Typography>
         <Typography variant="body1" color="text.secondary">
           <strong>Category:</strong> {stock.category}
         </Typography>
@@ -153,20 +165,44 @@ const StockItem: React.FC<StockItemProps> = ({ stock, onDelete }) => {
         </Typography>
         {renderDescription()}
       </CardContent>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', p: 2 }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", p: 2 }}>
         <Button variant="contained" color="primary" onClick={handleEdit}>
           Edit
         </Button>
-        <Button variant="contained" color="error" onClick={() => onDelete(stock._id)}>
+        <Button
+          variant="contained"
+          color="error"
+          onClick={() => onDelete(stock._id)}
+        >
           Delete
         </Button>
       </Box>
       <Modal open={open} onClose={handleClose}>
-        <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', bgcolor: 'background.paper', boxShadow: 24, p: 4, maxWidth: '80vw', maxHeight: '80vh', overflow: 'auto' }}>
-          <IconButton sx={{ position: 'absolute', top: 0, right: 0 }} onClick={handleClose}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            p: 4,
+            maxWidth: "80vw",
+            maxHeight: "80vh",
+            overflow: "auto",
+          }}
+        >
+          <IconButton
+            sx={{ position: "absolute", top: 0, right: 0 }}
+            onClick={handleClose}
+          >
             <CloseIcon />
           </IconButton>
-          <img src={stock.images[0]} alt={stock.name} style={{ maxWidth: '100%', maxHeight: '100%' }} />
+          <img
+            src={stock.images[0]}
+            alt={stock.name}
+            style={{ maxWidth: "100%", maxHeight: "100%" }}
+          />
         </Box>
       </Modal>
     </Card>
