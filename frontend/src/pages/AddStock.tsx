@@ -60,7 +60,7 @@ const AddStock: React.FC = () => {
   const fetchSubCategories = async (category: string) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/admin/subcategories/category/${category}`,
+        `http://localhost:5001/api/admin/subcategories/category/${category}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -97,7 +97,7 @@ const AddStock: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/admin/stocks", stockData, {
+      await axios.post("http://localhost:5001/api/admin/stocks", stockData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -46,7 +46,7 @@
 //     const fetchStock = async () => {
 //       try {
 //         const response = await axios.get(
-//           `http://localhost:5000/api/admin/stocks/${id}`,
+//           `http://localhost:5001/api/admin/stocks/${id}`,
 //           {
 //             headers: {
 //               Authorization: `Bearer ${token}`,
@@ -84,7 +84,7 @@
 //   const fetchSubCategories = async (category: string) => {
 //     try {
 //       const response = await axios.get(
-//         `http://localhost:5000/api/admin/subcategories/category/${category}`,
+//         `http://localhost:5001/api/admin/subcategories/category/${category}`,
 //         {
 //           headers: {
 //             Authorization: `Bearer ${token}`,
@@ -122,7 +122,7 @@
 //     e.preventDefault();
 //     try {
 //       await axios.put(
-//         `http://localhost:5000/api/admin/stocks/${id}`,
+//         `http://localhost:5001/api/admin/stocks/${id}`,
 //         stockData,
 //         {
 //           headers: {
@@ -303,7 +303,7 @@ const EditStock: React.FC = () => {
   const fetchSubCategories = useCallback(async (category: string) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/admin/subcategories/category/${category}`,
+        `http://localhost:5001/api/admin/subcategories/category/${category}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -322,7 +322,7 @@ const EditStock: React.FC = () => {
     const fetchStock = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/admin/stocks/${id}`,
+          `http://localhost:5001/api/admin/stocks/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -380,7 +380,7 @@ const EditStock: React.FC = () => {
     e.preventDefault();
     try {
       await axios.put(
-        `http://localhost:5000/api/admin/stocks/${id}`,
+        `http://localhost:5001/api/admin/stocks/${id}`,
         stockData,
         {
           headers: {
