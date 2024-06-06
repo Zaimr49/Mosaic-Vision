@@ -1,1 +1,1 @@
-export const backend_version = "11.6"
+export const backend_version = "11.7"
