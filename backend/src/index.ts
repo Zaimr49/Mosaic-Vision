@@ -4,8 +4,8 @@ import cors from 'cors';
 import connectDB from './DB/Connect'; 
 import testRouter from './routes/testRoute';
 import adminRouter from './routes/adminRoute';
-import subCategoryRoutes from './routes/subcategoryRoutes';
-import stockRoutes from './routes/stockRoutes';
+// import subCategoryRoutes from './routes/subcategoryRoutes';
+// import stockRoutes from './routes/stockRoutes';
 
 dotenv.config();
 
@@ -25,8 +25,8 @@ app.use('/api/connection', testRouter);
 
 app.use('/api/admin', adminRouter);
 
-app.use('/api/admin/subcategories', subCategoryRoutes);
-app.use('/api/admin/stocks', stockRoutes);
+// app.use('/api/admin/subcategories', subCategoryRoutes);
+// app.use('/api/admin/stocks', stockRoutes);
 
 const start = async (): Promise<void> => {
   try {
