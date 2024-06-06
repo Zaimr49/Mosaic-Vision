@@ -18,7 +18,7 @@ app.use(express.json());
 
 // Default message on root GET request
 app.get('/', (req: Request, res: Response) => {
-  res.send('Welcome to Mosaic Vision Backend!');
+  res.send('Welcome to Mosaic Vision Backend! Fix 4');
 });
 
 app.use('/api/connection', testRouter);
