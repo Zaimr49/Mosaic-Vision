@@ -44,10 +44,10 @@ const StockItem: React.FC<StockItemProps> = ({ stock, onDelete }) => {
       ? stock.description
       : `${stock.description.slice(0, 50)}...`;
     return (
-      <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+      <Typography variant="body1" color="text.secondary" sx={{ mt: 2 }}>
         <strong>Description:</strong> {description}{" "}
         {!showFullDescription && (
-          <Button variant="text" onClick={toggleDescription} sx={{fontSize:'0.65rem',color:'gray'}}>
+          <Button variant="text" onClick={toggleDescription} color="primary">
             Read more
           </Button>
         )}
@@ -78,16 +78,16 @@ const StockItem: React.FC<StockItemProps> = ({ stock, onDelete }) => {
             textAlign: "center",
             fontWeight: "600",
             letterSpacing: "0px",
-            fontSize: { xs: "1rem", sm: "1rem", md: "1.1rem" },
+            fontSize: { xs: "1.25rem", sm: "1.25rem", md: "1.5rem" },
             fontFamily: "Poppins, sans-serif",
           }}
         >
           {stock.name}{" "}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body1" color="text.secondary">
           <strong>Category:</strong> {stock.category}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body1" color="text.secondary">
           <strong>Sub-Category:</strong> {stock.subCategory}
         </Typography>
         {renderDescription()}
