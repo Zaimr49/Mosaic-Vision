@@ -46,7 +46,7 @@ const AdminAllStock: React.FC = () => {
   useEffect(() => {
     const fetchStocks = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/api/admin/stocks', {
+        const response = await axios.get('http://localhost:5000/api/admin/stocks', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -66,7 +66,7 @@ const AdminAllStock: React.FC = () => {
 
   const handleDeleteStock = async (id: string) => {
     try {
-      await axios.delete(`http://localhost:5001/api/admin/stocks/${id}`, {
+      await axios.delete(`http://localhost:5000/api/admin/stocks/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

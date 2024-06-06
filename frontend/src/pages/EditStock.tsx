@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { CloudinaryUploadAPI } from "../Constants";
+import './EditStock.css';
 
 const categories = ["Boxes by Industry", "Boxes by Material", "Boxes by Style"];
 
@@ -37,7 +38,7 @@ const EditStock: React.FC = () => {
 
   useEffect(() => {
     if (!isAdmin) {
-      navigate('/admin-home-page');
+      navigate("/admin-home-page");
     }
   }, [isAdmin, navigate]);
 
@@ -45,7 +46,7 @@ const EditStock: React.FC = () => {
     const fetchStock = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5001/api/admin/stocks/${id}`,
+          `http://localhost:5000/api/admin/stocks/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -83,7 +84,7 @@ const EditStock: React.FC = () => {
   const fetchSubCategories = async (category: string) => {
     try {
       const response = await axios.get(
-        `http://localhost:5001/api/admin/subcategories/category/${category}`,
+        `http://localhost:5000/api/admin/subcategories/category/${category}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -121,7 +122,7 @@ const EditStock: React.FC = () => {
     e.preventDefault();
     try {
       await axios.put(
-        `http://localhost:5001/api/admin/stocks/${id}`,
+        `http://localhost:5000/api/admin/stocks/${id}`,
         stockData,
         {
           headers: {
@@ -224,7 +225,7 @@ const EditStock: React.FC = () => {
             <img
               src={stockData.images[0]}
               alt="Stock"
-              style={{ maxWidth: "100%", height: "auto" }}
+              className="stock-image"
             />
           </Box>
         )}

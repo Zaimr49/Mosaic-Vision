@@ -10,7 +10,7 @@ import stockRoutes from './routes/stockRoutes';
 dotenv.config();
 
 const app: Application = express();
-const port: string | number = process.env.PORT || 5001;
+const port: string | number = process.env.PORT || 5000;
 
 app.use(cors());
 

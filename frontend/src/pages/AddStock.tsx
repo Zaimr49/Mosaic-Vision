@@ -1,33 +1,43 @@
-import React, { useState,useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
-import { Box, Button, TextField, Paper, Typography, MenuItem, Select, FormControl, InputLabel, SelectChangeEvent, CircularProgress } from '@mui/material';
-import axios from 'axios';
-import { CloudinaryUploadAPI } from '../Constants';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import {
+  Box,
+  Button,
+  TextField,
+  Paper,
+  Typography,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+  SelectChangeEvent,
+  CircularProgress,
+} from "@mui/material";
+import axios from "axios";
+import { CloudinaryUploadAPI } from "../Constants";
 
-const categories = [
-  'Boxes by Industry',
-  'Boxes by Material',
-  'Boxes by Style',
-];
+import './AddStock.css'
+
+const categories = ["Boxes by Industry", "Boxes by Material", "Boxes by Style"];
 
 const AddStock: React.FC = () => {
   const { isAdmin, token } = useSelector((state: RootState) => state.User);
   const navigate = useNavigate();
   const [stockData, setStockData] = useState({
-    name: '',
-    description: '',
-    images: [''],
-    category: '',
-    subCategory: '',
+    name: "",
+    description: "",
+    images: [""],
+    category: "",
+    subCategory: "",
   });
   const [subCategories, setSubCategories] = useState<string[]>([]);
   const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
     if (!isAdmin) {
-      navigate('/admin-home-page');
+      navigate("/admin-home-page");
     }
   }, [isAdmin, navigate]);
 
@@ -38,7 +48,7 @@ const AddStock: React.FC = () => {
 
   const handleCategoryChange = async (e: SelectChangeEvent<string>) => {
     const category = e.target.value as string;
-    setStockData({ ...stockData, category, subCategory: '' });
+    setStockData({ ...stockData, category, subCategory: "" });
     fetchSubCategories(category);
   };
 
@@ -49,14 +59,19 @@ const AddStock: React.FC = () => {
 
   const fetchSubCategories = async (category: string) => {
     try {
-      const response = await axios.get(`http://localhost:5001/api/admin/subcategories/category/${category}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setSubCategories(response.data.map((subCategory: any) => subCategory.title));
+      const response = await axios.get(
+        `http://localhost:5000/api/admin/subcategories/category/${category}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setSubCategories(
+        response.data.map((subCategory: any) => subCategory.title)
+      );
     } catch (error) {
-      console.error('Failed to fetch subcategories', error);
+      console.error("Failed to fetch subcategories", error);
     }
   };
 
@@ -64,15 +79,15 @@ const AddStock: React.FC = () => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       const formData = new FormData();
-      formData.append('file', file);
-      formData.append('upload_preset', 'gpt_edtech360'); // Replace with your Cloudinary upload preset
+      formData.append("file", file);
+      formData.append("upload_preset", "gpt_edtech360"); // Replace with your Cloudinary upload preset
       setIsUploading(true);
 
       try {
         const response = await axios.post(CloudinaryUploadAPI, formData);
         setStockData({ ...stockData, images: [response.data.url] });
       } catch (error) {
-        console.error('Error uploading image:', error);
+        console.error("Error uploading image:", error);
       } finally {
         setIsUploading(false);
       }
@@ -82,19 +97,29 @@ const AddStock: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5001/api/admin/stocks', stockData, {
+      await axios.post("http://localhost:5000/api/admin/stocks", stockData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      navigate('/admin-all-stock');
+      navigate("/admin-all-stock");
     } catch (error) {
-      console.error('Failed to add stock', error);
+      console.error("Failed to add stock", error);
     }
   };
 
   return (
-    <Box component={Paper} elevation={3} sx={{ padding: 4, maxWidth: 600, margin: 'auto', marginTop: 8, marginBottom: 4 }}>
+    <Box
+      component={Paper}
+      elevation={3}
+      sx={{
+        padding: 4,
+        maxWidth: 600,
+        margin: "auto",
+        marginTop: 8,
+        marginBottom: 4,
+      }}
+    >
       <Typography variant="h4" gutterBottom>
         Add Stock
       </Typography>
@@ -150,7 +175,11 @@ const AddStock: React.FC = () => {
           fullWidth
           sx={{ marginTop: 2 }}
         >
-          {isUploading ? <CircularProgress size={24} sx={{ color: 'white' }} /> : 'Upload Image'}
+          {isUploading ? (
+            <CircularProgress size={24} sx={{ color: "white" }} />
+          ) : (
+            "Upload Image"
+          )}
           <input
             type="file"
             accept="image/*"
@@ -159,11 +188,20 @@ const AddStock: React.FC = () => {
           />
         </Button>
         {stockData.images[0] && (
-          <Box sx={{ textAlign: 'center', marginTop: 2 }}>
-            <img src={stockData.images[0]} alt="Stock" style={{ maxWidth: '100%', height: 'auto' }} />
+          <Box sx={{ textAlign: "center", marginTop: 2 }}>
+            <img
+              src={stockData.images[0]}
+              alt="Stock"
+              className="stock-image"
+            />
           </Box>
         )}
-        <Button type="submit" variant="contained" color="primary" sx={{ marginTop: 2 }}>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          sx={{ marginTop: 2 }}
+        >
           Add Stock
         </Button>
       </form>
