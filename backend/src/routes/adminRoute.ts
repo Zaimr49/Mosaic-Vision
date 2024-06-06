@@ -8,4 +8,5 @@ router.route('/signup').post(signupFunction);
 router.route('/login').post(loginFunction);
 
 router.route('/check-middleware-auth').get(authentication,checkMiddlewareAuth);
+
 export default router;
