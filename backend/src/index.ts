@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './DB/Connect'; 
 import testRouter from './routes/testRoute';
-import adminRouter from './routes/adminRoute';
+// import adminRouter from './routes/adminRoute';
 // import subCategoryRoutes from './routes/subcategoryRoutes';
 // import stockRoutes from './routes/stockRoutes';
 
@@ -23,7 +23,7 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use('/api/connection', testRouter);
 
-app.use('/api/admin', adminRouter);
+// app.use('/api/admin', adminRouter);
 
 // app.use('/api/admin/subcategories', subCategoryRoutes);
 // app.use('/api/admin/stocks', stockRoutes);
