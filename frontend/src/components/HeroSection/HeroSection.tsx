@@ -54,11 +54,30 @@
 
 // export default HeroSection;
 
-import React from 'react';
-import { Container, Typography, Button, Box } from '@mui/material';
+import React, { useEffect, useState } from "react";
+import { Container, Typography, Button, Box,CircularProgress } from '@mui/material';
 import backgroundImage from './img1.jpg'; // Make sure to adjust the path
+import axios from "axios";
+import { testAPI } from "../../Constants";
 
 const HeroSection: React.FC = () => {
+  const [message, setMessage] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
+  useEffect(() => {
+    const fetchMessage = async () => {
+      try {
+        const response = await axios.get(testAPI);
+        setMessage(response.data.message);
+      } catch (error) {
+        setError("Failed to fetch message");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMessage();
+  }, []);
   return (
     <Box
       sx={{
@@ -103,7 +122,16 @@ const HeroSection: React.FC = () => {
             fontSize: { xs: '1.5rem', md: '3rem' }, // Adjust font size for different screen sizes
           }}
         >
-          customers will love
+          customers will love 
+          {loading ? (
+          <CircularProgress />
+        ) : error ? (
+          <Typography variant="body1" color="error">
+            {error}
+          </Typography>
+        ) : (
+          <Typography variant="body1">{message}</Typography>
+        )}
         </Typography>
         <Button
           variant="contained"

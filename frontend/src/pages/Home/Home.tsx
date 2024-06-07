@@ -1,38 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Typography,
-  CircularProgress,
   Container,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import axios from "axios";
-import { testAPI } from "../../Constants";
 import HeroSection from "../../components/HeroSection/HeroSection";
 import LogoSlider from "../../components/LogoSlider/LogoSlider";
 import "./Home.css";
 
 const Home: React.FC = () => {
-  const [message, setMessage] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string>("");
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-  useEffect(() => {
-    const fetchMessage = async () => {
-      try {
-        const response = await axios.get(testAPI);
-        setMessage(response.data.message);
-      } catch (error) {
-        setError("Failed to fetch message");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMessage();
-  }, []);
 
   return (
     <>
@@ -70,19 +50,10 @@ const Home: React.FC = () => {
               logo, simplifying the packaging process for your business.
             </>
           )}
+          
         </Typography>
       </Container>
-      <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="sm">
-        {loading ? (
-          <CircularProgress />
-        ) : error ? (
-          <Typography variant="body1" color="error">
-            {error}
-          </Typography>
-        ) : (
-          <Typography variant="body1">{message}</Typography>
-        )}
-      </Container>
+      
     </>
   );
 };
