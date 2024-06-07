@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Box, Menu, MenuItem, Container, Drawer, List, ListItem, ListItemText, ListItemIcon, Collapse, TextField } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -17,9 +17,8 @@ import logo from '../Mosaic-Logo.png';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../redux/store';
 import { clearUserData } from '../redux/slices/User_Slice';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import {getAllSubCategoriesAPI} from '../Constants';
+import { getAllSubCategoriesAPI } from '../Constants';
 
 const Navbar: React.FC = () => {
   const theme = useTheme();
@@ -55,6 +54,8 @@ const Navbar: React.FC = () => {
 
     fetchSubCategories();
   }, []);
+
+  const memoizedSubCategories = useMemo(() => subCategories, [subCategories]);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
@@ -95,6 +96,11 @@ const Navbar: React.FC = () => {
     navigate('/admin');
   };
 
+  const handleSubCategoryClick = (subCategory: string) => {
+    navigate(`/subcategory/${subCategory}`);
+    handleMenuClose();
+  };
+
   const getButtonStyles = (menuName: string) => ({
     backgroundColor: openMenu === menuName ? theme.palette.secondary.main : 'inherit',
     color: openMenu === menuName ? theme.palette.custom.tertiary : theme.palette.primary.main,
@@ -104,15 +110,15 @@ const Navbar: React.FC = () => {
     },
   });
 
-  const renderMenuItems = (items: string[], onClickHandler: () => void) => (
+  const renderMenuItems = (items: string[], onClickHandler: (item: string) => void) => (
     items.map((item) => (
-      <MenuItem key={item} onClick={onClickHandler}>{item}</MenuItem>
+      <MenuItem key={item} onClick={() => onClickHandler(item)}>{item}</MenuItem>
     ))
   );
 
   const renderMobileMenuItems = (items: string[]) => (
-    items.map((item) => (
-      <ListItem button key={item}>
+    items.map((item, index) => (
+      <ListItem button key={`${item}-${index}`} onClick={() => handleSubCategoryClick(item)}>
         <ListItemText primary={item} sx={{ color: theme.palette.primary.main }} />
       </ListItem>
     ))
@@ -144,9 +150,9 @@ const Navbar: React.FC = () => {
           <ListItem button component={Link} to="/admin" onClick={handleDrawerToggle}>
             <ListItemText primary="Admin" sx={{ color: theme.palette.secondary.main }} />
           </ListItem>
-          {Object.keys(subCategories).map(category => (
-            <>
-              <ListItem button onClick={() => handleMenuClick(category)} key={category}>
+          {Object.keys(memoizedSubCategories).map(category => (
+            <React.Fragment key={category}>
+              <ListItem button onClick={() => handleMenuClick(category)}>
                 <ListItemText primary={category} sx={{ color: theme.palette.secondary.main }} />
                 <ListItemIcon>
                   {openMenu === category ? <ExpandLess sx={{ color: theme.palette.secondary.main }} /> : <ExpandMore sx={{ color: theme.palette.secondary.main }} />}
@@ -154,10 +160,10 @@ const Navbar: React.FC = () => {
               </ListItem>
               <Collapse in={openMenu === category} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                  {renderMobileMenuItems(subCategories[category])}
+                  {renderMobileMenuItems(memoizedSubCategories[category])}
                 </List>
               </Collapse>
-            </>
+            </React.Fragment>
           ))}
           <ListItem button component={Link} to="/portfolio" onClick={handleDrawerToggle}>
             <ListItemText primary="Portfolio" sx={{ color: theme.palette.secondary.main }} />
@@ -176,7 +182,7 @@ const Navbar: React.FC = () => {
 
   const renderDesktopMenu = (
     <>
-      {Object.keys(subCategories).map(category => (
+      {Object.keys(memoizedSubCategories).map(category => (
         <Menu
           anchorEl={anchorEl}
           open={openMenu === category && !mobileView}
@@ -184,7 +190,7 @@ const Navbar: React.FC = () => {
           MenuListProps={{ onMouseLeave: handleMenuClose }}
           key={category}
         >
-          {renderMenuItems(subCategories[category], handleMenuClose)}
+          {renderMenuItems(memoizedSubCategories[category], handleSubCategoryClick)}
         </Menu>
       ))}
     </>
@@ -206,7 +212,7 @@ const Navbar: React.FC = () => {
               <Button color="inherit" component={Link} to="/admin" sx={{ color: theme.palette.primary.main, '&:hover': { color: theme.palette.secondary.main } }}>
                 Admin
               </Button>
-              {Object.keys(subCategories).map(category => (
+              {Object.keys(memoizedSubCategories).map(category => (
                 <Button
                   key={category}
                   color="inherit"
