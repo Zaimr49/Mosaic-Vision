@@ -21,14 +21,16 @@ const StockCard: React.FC<StockCardProps> = ({ stock }) => {
     
   return (
     <Card
-      sx={{
+    sx={{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        cursor: 'pointer',
         borderRadius: 2,
         boxShadow: 3,
-        transition: 'transform 0.3s, box-shadow 0.3s',
+        transition: 'transform 0.2s',
         '&:hover': {
           transform: 'scale(1.05)',
-          boxShadow: 6,
-          cursor: 'pointer',
         },
       }}
       onClick={() => handleStockClick(stock._id)} 
