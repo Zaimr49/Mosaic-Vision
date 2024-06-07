@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Typography, TextField, Button, Paper, Link, CircularProgress } from '@mui/material';
+import { Box, Typography, TextField, Button, Paper, Link, CircularProgress,Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -12,6 +12,7 @@ const Signup: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const formik = useFormik({
     initialValues: {
@@ -28,6 +29,7 @@ const Signup: React.FC = () => {
     }),
     onSubmit: async (values) => {
       setLoading(true);
+      setErrorMessage(null);
       try {
         const response = await axios.post(adminSignupAPI, values);
         dispatch(setUserData({
@@ -37,12 +39,18 @@ const Signup: React.FC = () => {
         }));
         navigate('/admin-home-page');
       } catch (error) {
+        if (axios.isAxiosError(error) && error.response?.status === 400) {
+          setErrorMessage('Email is already in use. Please use a different email.');
+        } else {
+          setErrorMessage('Failed to sign up. Please try again later.');
+        }
         console.error('Failed to sign up', error);
       } finally {
         setLoading(false);
       }
     },
   });
+
 
   return (
     <Box
@@ -53,6 +61,11 @@ const Signup: React.FC = () => {
       <Typography variant="h4" gutterBottom>
         Sign Up
       </Typography>
+      {errorMessage && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {errorMessage}
+        </Alert>
+      )}
       <form onSubmit={formik.handleSubmit}>
         <TextField
           fullWidth
