@@ -41,7 +41,9 @@ const Navbar: React.FC = () => {
   };
 
   const handleSearchAction = () => {
-    console.log('search working:', searchQuery);
+    if (searchQuery.trim()) {
+      navigate(`/search?search=${searchQuery}`);
+    }
   };
 
   const handleSearchKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -151,7 +153,6 @@ const Navbar: React.FC = () => {
               <ListItem button>
                 <ListItemText primary="Kraft Boxes" sx={{ color: theme.palette.primary.main }}/>
               </ListItem>
-              {/* Add more items as needed */}
             </List>
           </Collapse>
           <ListItem button onClick={() => handleMenuClick('style')}>
@@ -174,7 +175,6 @@ const Navbar: React.FC = () => {
               <ListItem button>
                 <ListItemText primary="Telescope Boxes" sx={{ color: theme.palette.primary.main }}/>
               </ListItem>
-              {/* Add more items as needed */}
             </List>
           </Collapse>
           <ListItem button component={Link} to="/portfolio" onClick={handleDrawerToggle}>
