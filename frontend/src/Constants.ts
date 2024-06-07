@@ -15,4 +15,4 @@ export interface Logo {
   }
 
   export const CloudinaryUploadAPI: string =
-  "https://api.cloudinary.com/v1_1/do2hqf8du/image/upload";
+  "https://api.cloudinary.com/v1_1/dy8prmfuq/image/upload";
