@@ -14,14 +14,15 @@ import {
   InputLabel,
   SelectChangeEvent,
   CircularProgress,
+  IconButton,
 } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import {
   CloudinaryUploadAPI,
   adminStocksAPI,
   subcategoriesAPI,
 } from "../../Constants";
-
 import "./AddStock.css";
 
 const categories = ["Boxes by Industry", "Boxes by Material", "Boxes by Style"];
@@ -32,7 +33,7 @@ const AddStock: React.FC = () => {
   const [stockData, setStockData] = useState({
     name: "",
     description: "",
-    images: [""],
+    images: [] as string[], // Update to handle multiple images
     category: "",
     subCategory: "",
   });
@@ -77,22 +78,39 @@ const AddStock: React.FC = () => {
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", "gpt_edtech360"); // Replace with your Cloudinary upload preset
+    if (e.target.files) {
+      const files = Array.from(e.target.files);
       setIsUploading(true);
 
       try {
-        const response = await axios.post(CloudinaryUploadAPI, formData);
-        setStockData({ ...stockData, images: [response.data.url] });
+        const uploadedImages = await Promise.all(
+          files.map(async (file) => {
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("upload_preset", "gpt_edtech360"); // Replace with your Cloudinary upload preset
+
+            const response = await axios.post(CloudinaryUploadAPI, formData);
+            return response.data.url;
+          })
+        );
+
+        setStockData((prevStockData) => ({
+          ...prevStockData,
+          images: [...prevStockData.images, ...uploadedImages],
+        }));
       } catch (error) {
-        console.error("Error uploading image:", error);
+        console.error("Error uploading images:", error);
       } finally {
         setIsUploading(false);
       }
     }
+  };
+
+  const handleRemoveImage = (index: number) => {
+    setStockData((prevStockData) => ({
+      ...prevStockData,
+      images: prevStockData.images.filter((_, i) => i !== index),
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -179,24 +197,41 @@ const AddStock: React.FC = () => {
           {isUploading ? (
             <CircularProgress size={24} sx={{ color: "white" }} />
           ) : (
-            "Upload Image"
+            "Upload Images"
           )}
           <input
             type="file"
             accept="image/*"
+            multiple
             hidden
             onChange={handleImageUpload}
           />
         </Button>
-        {stockData.images[0] && (
-          <Box sx={{ textAlign: "center", marginTop: 2 }}>
-            <img
-              src={stockData.images[0]}
-              alt="Stock"
-              className="stock-image"
-            />
-          </Box>
-        )}
+        <Box sx={{ textAlign: "center", marginTop: 2 }}>
+          {stockData.images.map((image, index) => (
+            <Box
+              key={index}
+              sx={{
+                position: "relative",
+                display: "inline-block",
+                margin: 1,
+              }}
+            >
+              <img src={image} alt={`Stock ${index}`} className="stock-image" />
+              <IconButton
+                onClick={() => handleRemoveImage(index)}
+                sx={{
+                  position: "absolute",
+                  top: 0,
+                  right: 0,
+                  backgroundColor: "rgba(255, 255, 255, 0.7)",
+                }}
+              >
+                <CloseIcon />
+              </IconButton>
+            </Box>
+          ))}
+        </Box>
         <Button
           type="submit"
           variant="contained"
