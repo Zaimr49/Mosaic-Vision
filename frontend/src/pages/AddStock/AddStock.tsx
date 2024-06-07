@@ -87,7 +87,7 @@ const AddStock: React.FC = () => {
           files.map(async (file) => {
             const formData = new FormData();
             formData.append("file", file);
-            formData.append("upload_preset", "gpt_edtech360"); // Replace with your Cloudinary upload preset
+            formData.append("upload_preset", "MosaicVision"); // Replace with your Cloudinary upload preset
 
             const response = await axios.post(CloudinaryUploadAPI, formData);
             return response.data.url;
