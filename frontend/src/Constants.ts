@@ -6,7 +6,7 @@ export const adminSignupAPI = `${base_url}/api/admin/signup`
 export const adminStocksAPI = `${base_url}/api/admin/stocks`;
 export const subcategoriesAPI = (category: string) => `${base_url}/api/admin/subcategories/category/${category}`; 
 export const stockDetailAPI = (id: string) => `${base_url}/api/admin/stocks/${id}`;
-
+export const getAllSubCategoriesAPI = `${base_url}/api/subcategories`;
 
 
 

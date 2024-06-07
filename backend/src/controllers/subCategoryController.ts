@@ -80,3 +80,20 @@ export const getSubCategoriesByCategory = async (req: Request, res: Response) =>
     res.status(500).json({ message: 'Something went wrong', error });
   }
 };
+
+// Get all subcategories grouped by category
+export const getAllSubCategories = async (req: Request, res: Response) => {
+  try {
+    const subCategories = await SubCategory.aggregate([
+      {
+        $group: {
+          _id: '$category',
+          subCategories: { $push: '$title' }
+        }
+      }
+    ]);
+    res.status(200).json(subCategories);
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong', error });
+  }
+};

@@ -18,6 +18,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../redux/store';
 import { clearUserData } from '../redux/slices/User_Slice';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import {getAllSubCategoriesAPI} from '../Constants';
 
 const Navbar: React.FC = () => {
   const theme = useTheme();
@@ -27,6 +29,7 @@ const Navbar: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileView, setMobileView] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [subCategories, setSubCategories] = useState<{ [key: string]: string[] }>({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -35,6 +38,23 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     setMobileView(isMobile);
   }, [isMobile]);
+
+  useEffect(() => {
+    const fetchSubCategories = async () => {
+      try {
+        const response = await axios.get(getAllSubCategoriesAPI);
+        const subCategoriesData: { [key: string]: string[] } = {};
+        response.data.forEach((category: any) => {
+          subCategoriesData[category._id] = category.subCategories;
+        });
+        setSubCategories(subCategoriesData);
+      } catch (error) {
+        console.error('Failed to fetch subcategories', error);
+      }
+    };
+
+    fetchSubCategories();
+  }, []);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
@@ -84,10 +104,6 @@ const Navbar: React.FC = () => {
     },
   });
 
-  const boxesByIndustry = ['Apparel Boxes', 'Bakery Boxes', 'Candle Boxes', 'CBD Boxes'];
-  const boxesByMaterial = ['Corrugated Boxes', 'Rigid Boxes', 'Cardboard Boxes', 'Kraft Boxes'];
-  const boxesByStyle = ['Drawer Boxes', 'Sleeve Boxes', 'Foldable Boxes', 'Telescope Boxes'];
-
   const renderMenuItems = (items: string[], onClickHandler: () => void) => (
     items.map((item) => (
       <MenuItem key={item} onClick={onClickHandler}>{item}</MenuItem>
@@ -128,39 +144,21 @@ const Navbar: React.FC = () => {
           <ListItem button component={Link} to="/admin" onClick={handleDrawerToggle}>
             <ListItemText primary="Admin" sx={{ color: theme.palette.secondary.main }} />
           </ListItem>
-          <ListItem button onClick={() => handleMenuClick('industry')}>
-            <ListItemText primary="Boxes by Industry" sx={{ color: theme.palette.secondary.main }} />
-            <ListItemIcon>
-              {openMenu === 'industry' ? <ExpandLess sx={{ color: theme.palette.secondary.main }} /> : <ExpandMore sx={{ color: theme.palette.secondary.main }} />}
-            </ListItemIcon>
-          </ListItem>
-          <Collapse in={openMenu === 'industry'} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              {renderMobileMenuItems(boxesByIndustry)}
-            </List>
-          </Collapse>
-          <ListItem button onClick={() => handleMenuClick('material')}>
-            <ListItemText primary="Boxes by Material" sx={{ color: theme.palette.secondary.main }} />
-            <ListItemIcon>
-              {openMenu === 'material' ? <ExpandLess sx={{ color: theme.palette.secondary.main }} /> : <ExpandMore sx={{ color: theme.palette.secondary.main }} />}
-            </ListItemIcon>
-          </ListItem>
-          <Collapse in={openMenu === 'material'} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              {renderMobileMenuItems(boxesByMaterial)}
-            </List>
-          </Collapse>
-          <ListItem button onClick={() => handleMenuClick('style')}>
-            <ListItemText primary="Boxes by Style" sx={{ color: theme.palette.secondary.main }} />
-            <ListItemIcon>
-              {openMenu === 'style' ? <ExpandLess sx={{ color: theme.palette.secondary.main }} /> : <ExpandMore sx={{ color: theme.palette.secondary.main }} />}
-            </ListItemIcon>
-          </ListItem>
-          <Collapse in={openMenu === 'style'} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              {renderMobileMenuItems(boxesByStyle)}
-            </List>
-          </Collapse>
+          {Object.keys(subCategories).map(category => (
+            <>
+              <ListItem button onClick={() => handleMenuClick(category)} key={category}>
+                <ListItemText primary={category} sx={{ color: theme.palette.secondary.main }} />
+                <ListItemIcon>
+                  {openMenu === category ? <ExpandLess sx={{ color: theme.palette.secondary.main }} /> : <ExpandMore sx={{ color: theme.palette.secondary.main }} />}
+                </ListItemIcon>
+              </ListItem>
+              <Collapse in={openMenu === category} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  {renderMobileMenuItems(subCategories[category])}
+                </List>
+              </Collapse>
+            </>
+          ))}
           <ListItem button component={Link} to="/portfolio" onClick={handleDrawerToggle}>
             <ListItemText primary="Portfolio" sx={{ color: theme.palette.secondary.main }} />
           </ListItem>
@@ -178,32 +176,17 @@ const Navbar: React.FC = () => {
 
   const renderDesktopMenu = (
     <>
-      <Menu
-        anchorEl={anchorEl}
-        open={openMenu === 'industry' && !mobileView}
-        onClose={handleMenuClose}
-        MenuListProps={{ onMouseLeave: handleMenuClose }}
-      >
-        {renderMenuItems(boxesByIndustry, handleMenuClose)}
-      </Menu>
-
-      <Menu
-        anchorEl={anchorEl}
-        open={openMenu === 'material' && !mobileView}
-        onClose={handleMenuClose}
-        MenuListProps={{ onMouseLeave: handleMenuClose }}
-      >
-        {renderMenuItems(boxesByMaterial, handleMenuClose)}
-      </Menu>
-
-      <Menu
-        anchorEl={anchorEl}
-        open={openMenu === 'style' && !mobileView}
-        onClose={handleMenuClose}
-        MenuListProps={{ onMouseLeave: handleMenuClose }}
-      >
-        {renderMenuItems(boxesByStyle, handleMenuClose)}
-      </Menu>
+      {Object.keys(subCategories).map(category => (
+        <Menu
+          anchorEl={anchorEl}
+          open={openMenu === category && !mobileView}
+          onClose={handleMenuClose}
+          MenuListProps={{ onMouseLeave: handleMenuClose }}
+          key={category}
+        >
+          {renderMenuItems(subCategories[category], handleMenuClose)}
+        </Menu>
+      ))}
     </>
   );
 
@@ -223,30 +206,17 @@ const Navbar: React.FC = () => {
               <Button color="inherit" component={Link} to="/admin" sx={{ color: theme.palette.primary.main, '&:hover': { color: theme.palette.secondary.main } }}>
                 Admin
               </Button>
-              <Button
-                color="inherit"
-                onClick={(event) => handleMenuOpen(event, 'industry')}
-                sx={getButtonStyles('industry')}
-                endIcon={<ArrowDropDownIcon />}
-              >
-                Boxes by Industry
-              </Button>
-              <Button
-                color="inherit"
-                onClick={(event) => handleMenuOpen(event, 'material')}
-                sx={getButtonStyles('material')}
-                endIcon={<ArrowDropDownIcon />}
-              >
-                Boxes by Material
-              </Button>
-              <Button
-                color="inherit"
-                onClick={(event) => handleMenuOpen(event, 'style')}
-                sx={getButtonStyles('style')}
-                endIcon={<ArrowDropDownIcon />}
-              >
-                Boxes by Style
-              </Button>
+              {Object.keys(subCategories).map(category => (
+                <Button
+                  key={category}
+                  color="inherit"
+                  onClick={(event) => handleMenuOpen(event, category)}
+                  sx={getButtonStyles(category)}
+                  endIcon={<ArrowDropDownIcon />}
+                >
+                  {category}
+                </Button>
+              ))}
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: '2em' }}>
               <TextField
