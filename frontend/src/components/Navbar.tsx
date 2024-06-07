@@ -97,6 +97,10 @@ const Navbar: React.FC = () => {
   };
 
   const handleSubCategoryClick = (subCategory: string) => {
+    if(mobileOpen)
+    {
+      setMobileOpen(false);
+    }
     navigate(`/subcategory/${subCategory}`);
     handleMenuClose();
   };
