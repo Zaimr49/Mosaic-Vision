@@ -66,7 +66,6 @@ export const deleteStock = async (req: Request, res: Response) => {
   }
 };
 
-
 // Get stocks by subcategory
 export const getStocksBySubCategory = async (req: Request, res: Response) => {
   const { subCategory } = req.params;

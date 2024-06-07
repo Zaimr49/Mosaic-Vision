@@ -15,6 +15,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Search from './pages/Search';
 import SubCategoryPage from './pages/SubCategoryPage';
+import StockDetailPage from './pages/StockDetailPage';
 
 const App: React.FC = () => {
   return (
@@ -34,6 +35,7 @@ const App: React.FC = () => {
             <Route path="/admin-edit-stock/:id" element={<EditStock />} />
             <Route path="/search" element={<Search />} />
             <Route path="/subcategory/:subCategory" element={<SubCategoryPage />} />
+            <Route path="/stock/:id" element={<StockDetailPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Box>

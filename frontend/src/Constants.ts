@@ -7,6 +7,8 @@ export const adminStocksAPI = `${base_url}/api/admin/stocks`;
 export const subcategoriesAPI = (category: string) => `${base_url}/api/admin/subcategories/category/${category}`; 
 export const stockDetailAPI = (id: string) => `${base_url}/api/admin/stocks/${id}`;
 export const getAllSubCategoriesAPI = `${base_url}/api/subcategories`;
+export const publicStocksBySubCategoryAPI = (subCategory: string) => `${base_url}/api/stocks/subcategory/${subCategory}`;
+export const publicStockDetailAPI = (id: string) => `${base_url}/api/stocks/${id}`;
 
 
 
