@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Typography, TextField, Button, Paper, Link, CircularProgress } from '@mui/material';
+import { Box, Typography, TextField, Button, Paper, Link, CircularProgress,Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -12,6 +12,7 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const formik = useFormik({
     initialValues: {
@@ -32,7 +33,8 @@ const Login: React.FC = () => {
           token: response.data.token,
         }));
         navigate('/admin-home-page');
-      } catch (error) {
+      }catch (error) {
+        setErrorMessage('Failed to login. Please check your email and password.');
         console.error('Failed to login', error);
       } finally {
         setLoading(false);
@@ -49,6 +51,11 @@ const Login: React.FC = () => {
       <Typography variant="h4" gutterBottom>
         Login
       </Typography>
+      {errorMessage && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {errorMessage}
+        </Alert>
+      )}
       <form onSubmit={formik.handleSubmit}>
         <TextField
           fullWidth
