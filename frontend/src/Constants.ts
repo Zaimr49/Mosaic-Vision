@@ -4,6 +4,8 @@ export const twtAuthTestAPI = `${base_url}/api/admin/check-middleware-auth`
 export const adminLoginAPI = `${base_url}/api/admin/login`
 export const adminSignupAPI = `${base_url}/api/admin/signup`
 export const adminStocksAPI = `${base_url}/api/admin/stocks`;
+export const subcategoriesAPI = (category: string) => `${base_url}/api/admin/subcategories/category/${category}`; 
+
 
 
 export interface Logo {

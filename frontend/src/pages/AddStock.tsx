@@ -16,7 +16,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import axios from "axios";
-import { CloudinaryUploadAPI } from "../Constants";
+import { CloudinaryUploadAPI, adminStocksAPI, subcategoriesAPI } from "../Constants";
 
 import './AddStock.css'
 
@@ -60,7 +60,7 @@ const AddStock: React.FC = () => {
   const fetchSubCategories = async (category: string) => {
     try {
       const response = await axios.get(
-        `http://localhost:5001/api/admin/subcategories/category/${category}`,
+        subcategoriesAPI(category),
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -97,7 +97,7 @@ const AddStock: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5001/api/admin/stocks", stockData, {
+      await axios.post(adminStocksAPI, stockData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
