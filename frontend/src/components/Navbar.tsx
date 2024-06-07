@@ -84,6 +84,24 @@ const Navbar: React.FC = () => {
     },
   });
 
+  const boxesByIndustry = ['Apparel Boxes', 'Bakery Boxes', 'Candle Boxes', 'CBD Boxes'];
+  const boxesByMaterial = ['Corrugated Boxes', 'Rigid Boxes', 'Cardboard Boxes', 'Kraft Boxes'];
+  const boxesByStyle = ['Drawer Boxes', 'Sleeve Boxes', 'Foldable Boxes', 'Telescope Boxes'];
+
+  const renderMenuItems = (items: string[], onClickHandler: () => void) => (
+    items.map((item) => (
+      <MenuItem key={item} onClick={onClickHandler}>{item}</MenuItem>
+    ))
+  );
+
+  const renderMobileMenuItems = (items: string[]) => (
+    items.map((item) => (
+      <ListItem button key={item}>
+        <ListItemText primary={item} sx={{ color: theme.palette.primary.main }} />
+      </ListItem>
+    ))
+  );
+
   const renderMobileMenu = (
     <Drawer
       anchor="left"
@@ -118,19 +136,7 @@ const Navbar: React.FC = () => {
           </ListItem>
           <Collapse in={openMenu === 'industry'} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItem button>
-                <ListItemText primary="Apparel Boxes" sx={{ color: theme.palette.primary.main }} />
-              </ListItem>
-              <ListItem button>
-                <ListItemText primary="Bakery Boxes" sx={{ color: theme.palette.primary.main }}/>
-              </ListItem>
-              <ListItem button>
-                <ListItemText primary="Candle Boxes" sx={{ color: theme.palette.primary.main }}/>
-              </ListItem>
-              <ListItem button>
-                <ListItemText primary="CBD Boxes" sx={{ color: theme.palette.primary.main }}/>
-              </ListItem>
-              {/* Add more items as needed */}
+              {renderMobileMenuItems(boxesByIndustry)}
             </List>
           </Collapse>
           <ListItem button onClick={() => handleMenuClick('material')}>
@@ -141,18 +147,7 @@ const Navbar: React.FC = () => {
           </ListItem>
           <Collapse in={openMenu === 'material'} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItem button>
-                <ListItemText primary="Corrugated Boxes" sx={{ color: theme.palette.primary.main }}/>
-              </ListItem>
-              <ListItem button>
-                <ListItemText primary="Rigid Boxes" sx={{ color: theme.palette.primary.main }}/>
-              </ListItem>
-              <ListItem button>
-                <ListItemText primary="Cardboard Boxes" sx={{ color: theme.palette.primary.main }}/>
-              </ListItem>
-              <ListItem button>
-                <ListItemText primary="Kraft Boxes" sx={{ color: theme.palette.primary.main }}/>
-              </ListItem>
+              {renderMobileMenuItems(boxesByMaterial)}
             </List>
           </Collapse>
           <ListItem button onClick={() => handleMenuClick('style')}>
@@ -163,36 +158,19 @@ const Navbar: React.FC = () => {
           </ListItem>
           <Collapse in={openMenu === 'style'} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItem button>
-                <ListItemText primary="Drawer Boxes" sx={{ color: theme.palette.primary.main }}/>
-              </ListItem>
-              <ListItem button>
-                <ListItemText primary="Sleeve Boxes" sx={{ color: theme.palette.primary.main }}/>
-              </ListItem>
-              <ListItem button>
-                <ListItemText primary="Foldable Boxes" sx={{ color: theme.palette.primary.main }}/>
-              </ListItem>
-              <ListItem button>
-                <ListItemText primary="Telescope Boxes" sx={{ color: theme.palette.primary.main }}/>
-              </ListItem>
+              {renderMobileMenuItems(boxesByStyle)}
             </List>
           </Collapse>
           <ListItem button component={Link} to="/portfolio" onClick={handleDrawerToggle}>
             <ListItemText primary="Portfolio" sx={{ color: theme.palette.secondary.main }} />
           </ListItem>
-          {/* {!mobileView && isAdmin && (
-              <Box sx={{ marginLeft: '2em' }}>
-                <Button color="inherit" onClick={handleLogout} sx={{ backgroundColor: theme.palette.error.main, color: theme.palette.custom.tertiary }}>
-                  Logout
-                </Button>
-              </Box>
-            )} */}
-          <ListItem button component={Link} to="/admin" onClick={handleDrawerToggle}>
-          {isAdmin &&
-          (<Button color="inherit" onClick={handleLogout} sx={{ backgroundColor: theme.palette.error.main, color: theme.palette.custom.tertiary }}>
-                  Logout
-                </Button>)}
-          </ListItem>
+          {isAdmin && (
+            <ListItem button component={Link} to="/admin" onClick={handleDrawerToggle}>
+              <Button color="inherit" onClick={handleLogout} sx={{ backgroundColor: theme.palette.error.main, color: theme.palette.custom.tertiary }}>
+                Logout
+              </Button>
+            </ListItem>
+          )}
         </List>
       </Box>
     </Drawer>
@@ -206,11 +184,7 @@ const Navbar: React.FC = () => {
         onClose={handleMenuClose}
         MenuListProps={{ onMouseLeave: handleMenuClose }}
       >
-        <MenuItem onClick={handleMenuClose}>Apparel Boxes</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Bakery Boxes</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Candle Boxes</MenuItem>
-        <MenuItem onClick={handleMenuClose}>CBD Boxes</MenuItem>
-        {/* Add more items as needed */}
+        {renderMenuItems(boxesByIndustry, handleMenuClose)}
       </Menu>
 
       <Menu
@@ -219,11 +193,7 @@ const Navbar: React.FC = () => {
         onClose={handleMenuClose}
         MenuListProps={{ onMouseLeave: handleMenuClose }}
       >
-        <MenuItem onClick={handleMenuClose}>Corrugated Boxes</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Rigid Boxes</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Cardboard Boxes</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Kraft Boxes</MenuItem>
-        {/* Add more items as needed */}
+        {renderMenuItems(boxesByMaterial, handleMenuClose)}
       </Menu>
 
       <Menu
@@ -232,11 +202,7 @@ const Navbar: React.FC = () => {
         onClose={handleMenuClose}
         MenuListProps={{ onMouseLeave: handleMenuClose }}
       >
-        <MenuItem onClick={handleMenuClose}>Drawer Boxes</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Sleeve Boxes</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Foldable Boxes</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Telescope Boxes</MenuItem>
-        {/* Add more items as needed */}
+        {renderMenuItems(boxesByStyle, handleMenuClose)}
       </Menu>
     </>
   );
