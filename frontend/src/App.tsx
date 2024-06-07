@@ -13,6 +13,7 @@ import AddStock from "./pages/AddStock/AddStock";
 import EditStock from "./pages/EditStock/EditStock";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Search from './pages/Search';
 
 const App: React.FC = () => {
   return (
@@ -30,6 +31,7 @@ const App: React.FC = () => {
             <Route path="/admin-all-stock" element={<AdminAllStock />} />
             <Route path="/admin-add-stock" element={<AddStock />} />
             <Route path="/admin-edit-stock/:id" element={<EditStock />} />
+            <Route path="/search" element={<Search />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Box>

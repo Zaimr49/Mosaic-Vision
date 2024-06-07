@@ -65,6 +65,12 @@ const Footer: React.FC = () => {
             </Box>
           </Grid>
         </Grid>
+        <Box sx={{ textAlign: 'center', mt: 3 }}>
+          <Typography variant="body2">
+            &copy; {new Date().getFullYear()}{" "}
+            Mosaic Vision. All rights reserved.
+          </Typography>
+        </Box>
       </Container>
     </Box>
   );
