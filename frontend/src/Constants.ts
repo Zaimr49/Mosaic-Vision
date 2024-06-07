@@ -3,6 +3,8 @@ export const testAPI = `${base_url}/api/connection/test`
 export const twtAuthTestAPI = `${base_url}/api/admin/check-middleware-auth`
 export const adminLoginAPI = `${base_url}/api/admin/login`
 export const adminSignupAPI = `${base_url}/api/admin/signup`
+export const adminStocksAPI = `${base_url}/api/admin/stocks`;
+
 
 export interface Logo {
     url: string;

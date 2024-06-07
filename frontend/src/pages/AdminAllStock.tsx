@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { Box, Typography, Paper, CircularProgress, Button, Grid } from '@mui/material';
 import axios from 'axios';
-import { twtAuthTestAPI } from '../Constants';
+import { twtAuthTestAPI,adminStocksAPI } from '../Constants';
 import StockItem from '../components/StockItem';
 import './AdminAllStock.css';
 
@@ -46,7 +46,7 @@ const AdminAllStock: React.FC = () => {
   useEffect(() => {
     const fetchStocks = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/api/admin/stocks', {
+        const response = await axios.get(adminStocksAPI, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -66,7 +66,7 @@ const AdminAllStock: React.FC = () => {
 
   const handleDeleteStock = async (id: string) => {
     try {
-      await axios.delete(`http://localhost:5001/api/admin/stocks/${id}`, {
+      await axios.delete(`${adminStocksAPI}/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
