@@ -11,7 +11,7 @@ import {
   IconButton,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import './StockItem.css'
+import "./StockItem.css";
 
 interface StockItemProps {
   stock: any;
@@ -104,7 +104,7 @@ const StockItem: React.FC<StockItemProps> = ({ stock, onDelete }) => {
           Delete
         </Button>
       </Box>
-      <Modal open={open} onClose={handleClose}>
+      {/* <Modal open={open} onClose={handleClose}>
         <Box
           sx={{
             position: "absolute",
@@ -124,6 +124,36 @@ const StockItem: React.FC<StockItemProps> = ({ stock, onDelete }) => {
             onClick={handleClose}
           >
             <CloseIcon />
+          </IconButton>
+          <img
+            src={stock.images[0]}
+            alt={stock.name}
+            className="stock-image"
+          />
+        </Box>
+      </Modal> */}
+      <Modal open={open} onClose={handleClose}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            p: { xs: 1, sm: 2, md: 4 },
+            maxWidth: { xs: "100vw", sm: "80vw" },
+            maxHeight: { xs: "100vh", sm: "80vh" },
+            width: { xs: "100%", sm: "auto" },
+            height: { xs: "100%", sm: "auto" },
+            overflow: "auto",
+          }}
+        >
+          <IconButton
+            sx={{ position: "absolute", top: 5, right: 5 }}
+            onClick={handleClose}
+          >
+            <CloseIcon color="secondary" />
           </IconButton>
           <img
             src={stock.images[0]}
