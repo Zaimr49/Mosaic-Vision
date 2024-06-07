@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
+import { RootState } from "../../redux/store";
 import {
   Box,
   Button,
@@ -16,9 +16,13 @@ import {
   CircularProgress,
 } from "@mui/material";
 import axios from "axios";
-import { CloudinaryUploadAPI, adminStocksAPI, subcategoriesAPI } from "../Constants";
+import {
+  CloudinaryUploadAPI,
+  adminStocksAPI,
+  subcategoriesAPI,
+} from "../../Constants";
 
-import './AddStock.css'
+import "./AddStock.css";
 
 const categories = ["Boxes by Industry", "Boxes by Material", "Boxes by Style"];
 
@@ -59,14 +63,11 @@ const AddStock: React.FC = () => {
 
   const fetchSubCategories = async (category: string) => {
     try {
-      const response = await axios.get(
-        subcategoriesAPI(category),
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get(subcategoriesAPI(category), {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setSubCategories(
         response.data.map((subCategory: any) => subCategory.title)
       );

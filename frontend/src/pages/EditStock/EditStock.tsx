@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
+import { RootState } from "../../redux/store";
 import {
   Box,
   Button,
@@ -16,8 +16,12 @@ import {
   CircularProgress,
 } from "@mui/material";
 import axios from "axios";
-import { CloudinaryUploadAPI, subcategoriesAPI, stockDetailAPI } from "../Constants";
-import './EditStock.css';
+import {
+  CloudinaryUploadAPI,
+  subcategoriesAPI,
+  stockDetailAPI,
+} from "../../Constants";
+import "./EditStock.css";
 
 const categories = ["Boxes by Industry", "Boxes by Material", "Boxes by Style"];
 
@@ -42,35 +46,32 @@ const EditStock: React.FC = () => {
     }
   }, [isAdmin, navigate]);
 
-  const fetchSubCategories = useCallback(async (category: string) => {
-    try {
-      const response = await axios.get(
-        subcategoriesAPI(category),
-        {
+  const fetchSubCategories = useCallback(
+    async (category: string) => {
+      try {
+        const response = await axios.get(subcategoriesAPI(category), {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
-      );
-      setSubCategories(
-        response.data.map((subCategory: any) => subCategory.title)
-      );
-    } catch (error) {
-      console.error("Failed to fetch subcategories", error);
-    }
-  }, [token]);
+        });
+        setSubCategories(
+          response.data.map((subCategory: any) => subCategory.title)
+        );
+      } catch (error) {
+        console.error("Failed to fetch subcategories", error);
+      }
+    },
+    [token]
+  );
 
   useEffect(() => {
     const fetchStock = async () => {
       try {
-        const response = await axios.get(
-          stockDetailAPI(id!),
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get(stockDetailAPI(id!), {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setStockData(response.data);
         fetchSubCategories(response.data.category);
       } catch (error) {
@@ -121,15 +122,11 @@ const EditStock: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.put(
-        stockDetailAPI(id!),
-        stockData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await axios.put(stockDetailAPI(id!), stockData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       navigate("/admin-all-stock");
     } catch (error) {
       console.error("Failed to update stock", error);
