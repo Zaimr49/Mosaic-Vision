@@ -339,7 +339,7 @@ const QuoteForm: React.FC = () => {
   const validateForm = () => {
     const { fullName, phoneNo, emailAddress, quantity, color, productName, length, width, depth, message } = formData;
     if (!fullName || !phoneNo || !emailAddress || !quantity || !color || !productName || !length || !width || !depth || !message) {
-      return "All fields must be filled in";
+      return "All fields must be filled";
     }
     if (!validateEmail(emailAddress)) {
       return "Invalid email address";
@@ -481,7 +481,7 @@ const QuoteForm: React.FC = () => {
           <Grid item sm={12} md={3}>
             <TextField
               fullWidth
-              label="L"
+              label="Length"
               name="length"
               variant="outlined"
               type="number"
@@ -493,7 +493,7 @@ const QuoteForm: React.FC = () => {
           <Grid item sm={12} md={3}>
             <TextField
               fullWidth
-              label="W"
+              label="Width"
               name="width"
               variant="outlined"
               type="number"
@@ -505,7 +505,7 @@ const QuoteForm: React.FC = () => {
           <Grid item sm={12} md={3}>
             <TextField
               fullWidth
-              label="D"
+              label="Depth"
               name="depth"
               variant="outlined"
               type="number"
