@@ -116,7 +116,7 @@ const LogoSlider: React.FC = () => {
         backgroundColor: '#f9f9f9',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        marginTop: '0.35rem',
+        marginTop: '0.75rem',
       }}>
       <Container
         maxWidth={false}
