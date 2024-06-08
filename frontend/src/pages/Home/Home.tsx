@@ -113,7 +113,7 @@ const Home: React.FC = () => {
             fontFamily: "Poppins, sans-serif",
             fontSize: "1.1rem",
             fontWeight: 500,
-            mb:5
+            mb:3
           }}
         >
           Elevate your brand with our tailored packaging solutions designed to
