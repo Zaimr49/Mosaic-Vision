@@ -15,7 +15,19 @@ const SubCategoryCard: React.FC<SubCategoryCardProps> = ({ data }) => {
     <Grid container spacing={4} sx={{pl:5,pr:5}}>
       {data.map((item, index) => (
         <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
-          <Card>
+          <Card 
+            sx={{
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            cursor: 'pointer',
+            borderRadius: 2,
+            boxShadow: 3,
+            transition: 'transform 0.2s',
+            '&:hover': {
+              transform: 'scale(1.05)',
+            },
+          }}>
             <Link
               href={`/subcategory/${item.name}`}
               sx={{
