@@ -5,6 +5,7 @@ import LogoSlider from "../../components/LogoSlider/LogoSlider";
 import FeaturesGrid from "../../components/FeaturesGrid/FeaturesGrid";
 import FinishingImagesGrid from "../../components/FinishingImagesGrid/FinishingImagesGrid";
 import SubCategoryCard from "../../components/SubCategoryCard/SubCategoryCard";
+import QuoteForm from "../../components/QuoteForm/QuoteForm";
 import "./Home.css";
 
 const data = [
@@ -192,6 +193,9 @@ const Home: React.FC = () => {
           FEEL OF CUSTOM BOXES
         </Typography>
         <FinishingImagesGrid finishingItemsData={finishingItemsData} />
+      </Container>
+      <Container sx={{mb:5}}>
+        <QuoteForm />
       </Container>
     </>
   );
