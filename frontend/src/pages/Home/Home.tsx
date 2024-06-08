@@ -10,10 +10,10 @@ import "./Home.css";
 
 const data = [
   { name: 'Rigid Boxes', image: 'https://res.cloudinary.com/dy8prmfuq/image/upload/v1717851598/sc1_kklcrh.png' },
-  { name: 'Display Boxes', image: 'https://res.cloudinary.com/dy8prmfuq/image/upload/v1717851601/sc4_gst0q2.png' },
   { name: 'Paper Bags', image: 'https://res.cloudinary.com/dy8prmfuq/image/upload/v1717851600/sc3_tjzyfh.png' },
-  { name: 'Cardboard Boxes', image: 'https://res.cloudinary.com/dy8prmfuq/image/upload/v1717851599/sc2_qwsg5a.png' },
   { name: 'Tuck Boxes', image: 'https://res.cloudinary.com/dy8prmfuq/image/upload/v1717851602/sc5_agzwvg.png' },
+  { name: 'Cardboard Boxes', image: 'https://res.cloudinary.com/dy8prmfuq/image/upload/v1717851599/sc2_qwsg5a.png' },
+  { name: 'Display Boxes', image: 'https://res.cloudinary.com/dy8prmfuq/image/upload/v1717851601/sc4_gst0q2.png' },
 ];
 
 const features = [
