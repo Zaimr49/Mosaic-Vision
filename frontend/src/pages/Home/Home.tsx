@@ -4,7 +4,17 @@ import HeroSection from "../../components/HeroSection/HeroSection";
 import LogoSlider from "../../components/LogoSlider/LogoSlider";
 import FeaturesGrid from "../../components/FeaturesGrid/FeaturesGrid";
 import FinishingImagesGrid from "../../components/FinishingImagesGrid/FinishingImagesGrid";
+import SubCategoryCard from "../../components/SubCategoryCard/SubCategoryCard";
 import "./Home.css";
+
+const data = [
+  { name: 'Rigid Boxes', image: 'https://res.cloudinary.com/dy8prmfuq/image/upload/v1717851598/sc1_kklcrh.png' },
+  { name: 'Display Boxes', image: 'https://res.cloudinary.com/dy8prmfuq/image/upload/v1717851601/sc4_gst0q2.png' },
+  { name: 'Paper Bags', image: 'https://res.cloudinary.com/dy8prmfuq/image/upload/v1717851600/sc3_tjzyfh.png' },
+  { name: 'Cardboard Boxes', image: 'https://res.cloudinary.com/dy8prmfuq/image/upload/v1717851599/sc2_qwsg5a.png' },
+  { name: 'Tuck Boxes', image: 'https://res.cloudinary.com/dy8prmfuq/image/upload/v1717851602/sc5_agzwvg.png' },
+];
+
 const features = [
   {
     image:
@@ -103,6 +113,7 @@ const Home: React.FC = () => {
             fontFamily: "Poppins, sans-serif",
             fontSize: "1.1rem",
             fontWeight: 500,
+            mb:5
           }}
         >
           Elevate your brand with our tailored packaging solutions designed to
@@ -115,6 +126,7 @@ const Home: React.FC = () => {
             </>
           )}
         </Typography>
+        <SubCategoryCard data={data} />
       </Container>
       <Container
         sx={{ backgroundColor: "#F9FBED", pt: 1, pb: 1, mt: 5, mb: 0 }}
@@ -179,8 +191,6 @@ const Home: React.FC = () => {
           VARIETY OF FINISHING OPTIONS TO ENSURE SPECTACULAR LOOKS AND PREMIUM
           FEEL OF CUSTOM BOXES
         </Typography>
-        {/* <FinishingImagesGrid images={finishingImages} /> */}
-        {/* <FinishingImagesGrid /> */}
         <FinishingImagesGrid finishingItemsData={finishingItemsData} />
       </Container>
     </>
