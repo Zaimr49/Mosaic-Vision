@@ -10,8 +10,7 @@ export const getAllSubCategoriesAPI = `${base_url}/api/subcategories`;
 export const publicStocksBySubCategoryAPI = (subCategory: string) => `${base_url}/api/stocks/subcategory/${subCategory}`;
 export const publicStockDetailAPI = (id: string) => `${base_url}/api/stocks/${id}`;
 export const searchAPI = (query: string) => `${base_url}/api/search?query=${query}`;
-
-
+export const submitQuoteAPI = `${base_url}/api/quotes/submit-quote`;
 
 export interface Logo {
     url: string;

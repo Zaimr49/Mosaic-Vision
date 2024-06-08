@@ -7,6 +7,7 @@ import adminRouter from './routes/adminRoute';
 import subCategoryRouter from './routes/publicSubCategoryRoute';
 import publicStockRouter from './routes/publicStockRoute';
 import searchRoutes from './routes/searchRoutes';
+import quoteRouter from './routes/quoteRoute';
 import { backend_version } from './Constant';
 
 dotenv.config();
@@ -26,6 +27,7 @@ app.use('/api/admin', adminRouter);
 app.use('/api/subcategories', subCategoryRouter);
 app.use('/api/stocks', publicStockRouter);
 app.use('/api/search', searchRoutes);
+app.use('/api/quotes', quoteRouter);
 
 const start = async (): Promise<void> => {
   try {
