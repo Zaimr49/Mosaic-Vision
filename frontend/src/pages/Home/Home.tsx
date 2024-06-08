@@ -45,8 +45,6 @@ const finishingItemsData = [
     rows: 2,
     cols: 2,
   },
-
-  
   {
     img: "https://res.cloudinary.com/dy8prmfuq/image/upload/v1717841436/finishing4-ezgif.com-webp-to-jpg-converter_nvga6c.jpg",
     title: "Silver Foiling",
