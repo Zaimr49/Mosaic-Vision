@@ -8,9 +8,9 @@ interface IQuote extends Document {
   color: string;
   productName: string;
   dimensions: {
-    length: number;
-    width: number;
-    depth: number;
+    length: mongoose.Types.Decimal128;
+    width: mongoose.Types.Decimal128;
+    depth: mongoose.Types.Decimal128;
     unit: string;
   };
   message: string;
@@ -43,15 +43,15 @@ const QuoteSchema: Schema = new mongoose.Schema({
   },
   dimensions: {
     length: {
-      type: Number,
+      type: mongoose.Schema.Types.Decimal128,
       required: [true, 'Please provide the length'],
     },
     width: {
-      type: Number,
+      type: mongoose.Schema.Types.Decimal128,
       required: [true, 'Please provide the width'],
     },
     depth: {
-      type: Number,
+      type: mongoose.Schema.Types.Decimal128,
       required: [true, 'Please provide the depth'],
     },
     unit: {
